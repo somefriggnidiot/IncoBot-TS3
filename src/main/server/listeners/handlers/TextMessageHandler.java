@@ -6,6 +6,10 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.core.Executor;
 import main.core.Util;
 
+/**
+ * Logic and helper functions used to handle 
+ * the firing of a {@link TextMessageListener}
+ */
 public class TextMessageHandler {
       TextMessageEvent event;
       private final Integer botId = Executor.getServer("testInstance").getBotId();

@@ -6,21 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import com.github.theholywaffle.teamspeak3.TS3Api;
-import com.github.theholywaffle.teamspeak3.TS3Query;
-import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
-import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
-import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-
 import main.server.ServerConnectionManager;
-import main.server.listeners.TextMessageListener;
 
+/**
+ * Main class of the SFITS3 bot program.
+ */
 public class Executor implements Runnable {
 
    static BufferedReader in;
    static Boolean quit = false;
    private final static Map<String, ServerConnectionManager> scmMap = new HashMap<>();
    
+   /**
+    * Read loop to accept commands from the program's console. 
+    * This function is run automatically upon execution and 
+    * should not be called in other classes!
+    */
    public void run() {
       String msg = null;
 
@@ -37,6 +38,15 @@ public class Executor implements Runnable {
       }
    }
 
+   /**
+    * Begins bot services and logging.  
+    * This function is run automatically upon execution and
+    * should not be called in other classes!
+    * 
+    * @param args arguments to be passed through upon Jar execution.
+    * @throws Exception if there are any errors encountered 
+    * during execution.
+    */
    public static void main(String[] args) throws Exception {
       /*
        * INITIALIZATION
@@ -83,7 +93,15 @@ public class Executor implements Runnable {
 
    }
    
-   public static ServerConnectionManager getServer(String instance) {
-      return scmMap.get(instance);
+   /**
+    * Gets a {@link ServerConnectionManager} instance from the
+    * current list of managers.
+    * 
+    * @param instanceName  the name of the instance to get.
+    * @return the {@code ServerConnectionManager} if it exists, 
+    * otherwise {@code null}.
+    */
+   public static ServerConnectionManager getServer(String instanceName) {
+      return scmMap.get(instanceName);
    }
 }
