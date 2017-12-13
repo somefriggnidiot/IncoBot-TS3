@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import main.conf.Configuration;
 import main.server.ServerConnectionManager;
 
 /**
@@ -28,8 +29,9 @@ public class Executor implements Runnable {
       while (true) {
          try {
             msg = in.readLine();
+            Commands.handle(msg);
          } catch (Exception e) {
-
+            new MessageHandler(Level.INFO, e.getMessage());
          }
          if (msg.equals("!forcequit")) {
             quit = true;
@@ -54,14 +56,14 @@ public class Executor implements Runnable {
        * One-off program setup before main execution loop.
        */
 
-      new MessageHandler(Level.ALL, Level.INFO, "System Initialized");
+      new MessageHandler(Level.INFO, "System Initialized");
 
       in = new BufferedReader(new InputStreamReader(System.in));
       Thread t1 = new Thread(new Executor());
       t1.start();
 
       scmMap.put("testInstance", new ServerConnectionManager());
-      new MessageHandler(scmMap.get("testInstance").getDebugLevel(), Level.INFO, "Connecting...");
+      new MessageHandler(Level.INFO, "Connecting...");
       scmMap.get("testInstance").connect();
       
       /*
@@ -69,16 +71,16 @@ public class Executor implements Runnable {
        * 
        */
       Boolean exit = false;
-      int thirtySecCntr = 600;
+      int thirtySecondCounter = 600;
       do {
          Thread.sleep(500);
-         if (thirtySecCntr++ == 600) {
-            thirtySecCntr = 0;
-            new MessageHandler(Level.ALL, Level.INFO, "System Running");
+         if (thirtySecondCounter++ == 600) {
+            thirtySecondCounter = 0;
+            new MessageHandler(Level.INFO, "System Running");
          }
          
          if (quit) {
-            new MessageHandler(Level.INFO, Level.INFO, "Disconnecting bot.");
+            new MessageHandler(Level.INFO, "Disconnecting bot.");
             exit = true;
          }
          

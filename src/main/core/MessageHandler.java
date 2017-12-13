@@ -1,9 +1,11 @@
 package main.core;
 
 import java.util.logging.Level;
+import main.conf.Configuration;
 
 public class MessageHandler {
-   Level configDebugLevel, messageLevel;
+   private static Level configDebugLevel = Configuration.getLoggingLevel();
+   Level messageLevel;
    String prefix, message;
 
    /**
@@ -13,12 +15,25 @@ public class MessageHandler {
     * @param messageLevel  The logging level of the message.
     * @param message  The message being displayed.
     */
+   @Deprecated
    public MessageHandler(Level configDebugLevel, Level messageLevel, String message) {
       this.configDebugLevel = configDebugLevel;
       this.messageLevel = messageLevel;
       this.message = message;
       handle();
    }
+
+  /**
+   * Log a message to the console if it's of a certain level.
+   *
+   * @param messageLevel  The logging level of the message.
+   * @param message  The message being displayed.
+   */
+  public MessageHandler(Level messageLevel, String message) {
+    this.messageLevel = messageLevel;
+    this.message = message;
+    System.out.println(Util.timeStamp() + "[" + messageLevel.getName() + "] " + message);
+  }
    
    /**
     * Log a message to the console regardless of the config's logging level.
