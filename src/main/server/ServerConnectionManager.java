@@ -14,8 +14,7 @@ import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
 import main.core.MessageHandler;
-import main.core.Util;
-import main.server.ServerConfigBuilder;
+import main.util.Util;
 import main.server.listeners.ClientConnectListener;
 import main.server.listeners.TextMessageListener;
 

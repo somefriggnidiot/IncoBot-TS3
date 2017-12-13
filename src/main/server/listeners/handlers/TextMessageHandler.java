@@ -4,7 +4,7 @@ import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 
 import main.core.Executor;
-import main.core.Util;
+import main.util.Util;
 
 /**
  * Logic and helper functions used to handle 

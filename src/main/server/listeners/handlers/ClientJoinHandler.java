@@ -17,7 +17,7 @@ import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 
 import main.core.Config;
 import main.core.Executor;
-import main.core.Util;
+import main.util.Util;
 
 /**
  * Logic and helper functions used to handle 
