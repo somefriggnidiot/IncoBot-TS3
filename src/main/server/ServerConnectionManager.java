@@ -13,7 +13,7 @@ import com.github.theholywaffle.teamspeak3.api.reconnect.ConnectionHandler;
 import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
-import main.core.MessageHandler;
+import main.util.MessageHandler;
 import main.util.Util;
 import main.server.listeners.ClientConnectListener;
 import main.server.listeners.TextMessageListener;
@@ -23,12 +23,12 @@ import main.server.listeners.TextMessageListener;
  * connection configuration and actions.
  */
 public class ServerConnectionManager {
-   TS3Query serverQuery;
-   TS3Config config;
-   Level serverDebugLevel;
-   TS3Api api;
-   TS3ApiAsync apiAsync;
-   Integer botClientId;
+   private TS3Query serverQuery;
+   private TS3Config config;
+   private Level serverDebugLevel;
+   private TS3Api api;
+   private TS3ApiAsync apiAsync;
+   private Integer botClientId;
 
    /**
     * Creates a basic SCM with default parameters.
@@ -37,7 +37,7 @@ public class ServerConnectionManager {
       config = new ServerConfigBuilder()
             .withHost("localhost")
             .withQueryPort(10011)
-            .withDebugLevel(Level.INFO)
+            .withDebugLevel(Level.OFF)
             .withFloodRate(FloodRate.UNLIMITED)
             .withReconnectStrategy(ReconnectStrategy.exponentialBackoff())
             .withConnectionHandler(new ConnectionHandler() {
@@ -50,9 +50,7 @@ public class ServerConnectionManager {
                   botClientId = api.whoAmI().getId();
                }
    
-               public void onDisconnect(TS3Query ts3Query) {
-                  return;
-               }
+               public void onDisconnect(TS3Query ts3Query) { }
             })
             .build();
       
@@ -65,7 +63,7 @@ public class ServerConnectionManager {
    public void connect() {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
-            new MessageHandler(serverDebugLevel, Level.CONFIG, "Connection initiated.");
+            new MessageHandler(Level.CONFIG, "Connection initiated.");
             serverQuery = new TS3Query(config);
             serverQuery.connect();
             
@@ -75,14 +73,14 @@ public class ServerConnectionManager {
             addListeners(serverQuery.getApi());
             api.addTS3Listeners(new TextMessageListener());
             api.addTS3Listeners(new ClientConnectListener());
-            
+
+            //TODO: Remove; added for testing.
             api.sendServerMessage("Blah");
-            
             for (Client client : api.getClients()) {
                api.sendPrivateMessage(client.getId(), "asdfa");
             }
 
-            new MessageHandler(serverDebugLevel, Level.INFO, "Connected!");
+            new MessageHandler(Level.INFO, "Connected!");
          }
       });
    }

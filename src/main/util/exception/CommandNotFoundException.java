@@ -8,6 +8,6 @@ public class CommandNotFoundException extends Exception {
    }
 
    public CommandNotFoundException(String invalidCommand) {
-      super(String.format(ErrorMessages.COMMAND_NOT_FOUND, "\"" + invalidCommand + "\""));
+      super(String.format(ErrorMessages.COMMAND_NOT_FOUND, "\'" + invalidCommand + "\'"));
    }
 }

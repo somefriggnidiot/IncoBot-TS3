@@ -5,8 +5,9 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import main.core.commands.Command;
+import main.core.commands.Commands;
 import main.server.ServerConnectionManager;
+import main.util.MessageHandler;
 import main.util.exception.CommandNotFoundException;
 
 /**
@@ -89,9 +90,11 @@ public class Executor implements Runnable {
       String msg = null;
 
       while (true) {
+
+
          try {
             msg = in.readLine();
-            Command.handle(msg);
+            Commands.handle(msg);
          } catch (IllegalArgumentException iae) {
             new MessageHandler(Level.INFO, iae.getMessage());
          } catch (CommandNotFoundException cnfe) {
