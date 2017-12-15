@@ -1,76 +1,87 @@
 package main.conf;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public final class ConnectionConfiguration {
-    private String instanceName;
-    private String serverAddress;
-    private String serverQueryPort;
-    private String virtualServerId;
-    private String serverQueryName;
-    private String serverQueryPassword;
-    private String botNickname;
-    private String botSlowMode;
 
-    public String getInstanceName() {
-        return instanceName;
-    }
+   @JsonProperty("instance-name")
+   private String instanceName;
+   @JsonProperty("server-address")
+   private String serverAddress;
+   @JsonProperty("server-query-port")
+   private int serverQueryPort;
+   @JsonProperty("virtual-server-id")
+   private int virtualServerId;
+   @JsonProperty("server-query-name")
+   private String serverQueryName;
+   @JsonProperty("server-query-password")
+   private String serverQueryPassword;
+   @JsonProperty("bot-nickname")
+   private String botNickname;
+   @JsonProperty("bot-slow-mode")
+   private String botSlowMode;
 
-    public void setInstanceName(String instanceName) {
-        this.instanceName = instanceName;
-    }
+   public String getInstanceName() {
+      return instanceName;
+   }
 
-    public String getServerAddress() {
-        return serverAddress;
-    }
+   public void setInstanceName(String instanceName) {
+      this.instanceName = instanceName;
+   }
 
-    public void setServerAddress(String serverAddress) {
-        this.serverAddress = serverAddress;
-    }
+   public String getServerAddress() {
+      return serverAddress;
+   }
 
-    public String getServerQueryPort() {
-        return serverQueryPort;
-    }
+   public void setServerAddress(String serverAddress) {
+      this.serverAddress = serverAddress;
+   }
 
-    public void setServerQueryPort(String serverQueryPort) {
-        this.serverQueryPort = serverQueryPort;
-    }
+   public int getServerQueryPort() {
+      return serverQueryPort;
+   }
 
-    public String getVirtualServerId() {
-        return virtualServerId;
-    }
+   public void setServerQueryPort(int serverQueryPort) {
+      this.serverQueryPort = serverQueryPort;
+   }
 
-    public void setVirtualServerId(String virtualServerId) {
-        this.virtualServerId = virtualServerId;
-    }
+   public int getVirtualServerId() {
+      return virtualServerId;
+   }
 
-    public String getServerQueryName() {
-        return serverQueryName;
-    }
+   public void setVirtualServerId(int virtualServerId) {
+      this.virtualServerId = virtualServerId;
+   }
 
-    public void setServerQueryName(String serverQueryName) {
-        this.serverQueryName = serverQueryName;
-    }
+   public String getServerQueryName() {
+      return serverQueryName;
+   }
 
-    public String getServerQueryPassword() {
-        return serverQueryPassword;
-    }
+   public void setServerQueryName(String serverQueryName) {
+      this.serverQueryName = serverQueryName;
+   }
 
-    public void setServerQueryPassword(String serverQueryPassword) {
-        this.serverQueryPassword = serverQueryPassword;
-    }
+   public String getServerQueryPassword() {
+      return serverQueryPassword;
+   }
 
-    public String getBotNickname() {
-        return botNickname;
-    }
+   public void setServerQueryPassword(String serverQueryPassword) {
+      this.serverQueryPassword = serverQueryPassword;
+   }
 
-    public void setBotNickname(String botNickname) {
-        this.botNickname = botNickname;
-    }
+   public String getBotNickname() {
+      return botNickname;
+   }
 
-    public String getBotSlowMode() {
-        return botSlowMode;
-    }
+   public void setBotNickname(String botNickname) {
+      this.botNickname = botNickname;
+   }
 
-    public void setBotSlowMode(String botSlowMode) {
-        this.botSlowMode = botSlowMode;
-    }
+   public String getBotSlowMode() {
+      return botSlowMode;
+   }
+
+   public void setBotSlowMode(String botSlowMode) {
+      this.botSlowMode = botSlowMode;
+   }
 }

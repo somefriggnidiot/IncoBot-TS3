@@ -1,5 +1,6 @@
 package main.server;
 
+import java.io.File;
 import java.util.logging.Level;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
@@ -13,6 +14,8 @@ import com.github.theholywaffle.teamspeak3.api.reconnect.ConnectionHandler;
 import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
+import main.conf.ConfigHandler;
+import main.conf.ConnectionConfiguration;
 import main.util.MessageHandler;
 import main.util.Util;
 import main.server.listeners.ClientConnectListener;
@@ -29,23 +32,25 @@ public class ServerConnectionManager {
    private TS3Api api;
    private TS3ApiAsync apiAsync;
    private Integer botClientId;
+   ConnectionConfiguration connectionConfig = ConfigHandler.readConfig(
+       new File("./config/ConnectionConfig.yaml"));
 
    /**
     * Creates a basic SCM with default parameters.
     */
    public ServerConnectionManager() {
       config = new ServerConfigBuilder()
-            .withHost("localhost")
-            .withQueryPort(10011)
+            .withHost(connectionConfig.getServerAddress())
+            .withQueryPort(connectionConfig.getServerQueryPort())
             .withDebugLevel(Level.OFF)
             .withFloodRate(FloodRate.UNLIMITED)
             .withReconnectStrategy(ReconnectStrategy.exponentialBackoff())
             .withConnectionHandler(new ConnectionHandler() {
                public void onConnect(TS3Query ts3Query) {
                   TS3Api api = ts3Query.getApi();
-                  api.login("serveradmin", "MlLkGLQF");
-                  api.selectVirtualServerById(1);
-                  api.setNickname("Bot Johnson");
+                  api.login(connectionConfig.getServerQueryName(), connectionConfig.getServerQueryPassword());
+                  api.selectVirtualServerById(connectionConfig.getVirtualServerId());
+                  api.setNickname(connectionConfig.getBotNickname());
                   api.registerAllEvents();
                   botClientId = api.whoAmI().getId();
                }

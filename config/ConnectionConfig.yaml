@@ -1,0 +1,32 @@
+# ==============================================
+# ====           META INFORMATION           ====
+# ==============================================
+# = Information used to identify this bot      =
+# =   instance.                                =
+# ==============================================
+
+instance-name: 'testInstance'
+
+# ==============================================
+# ====        CONNECTION INFORMATION        ====
+# ==============================================
+# = Information used to initiate the           =
+# =   connection to the server.                =
+# ==============================================
+
+server-address: 'localhost'
+server-query-port: 10011
+virtual-server-id: 1
+
+server-query-name: 'serveradmin'
+server-query-password: ''
+
+bot-nickname: 'Oh Bot Johnson'
+bot-slow-mode: ''
+
+# ==============================================
+# ====           META INFORMATION           ====
+# ==============================================
+# = Information used to identify this bot      =
+# =   instance.                                =
+# ==============================================

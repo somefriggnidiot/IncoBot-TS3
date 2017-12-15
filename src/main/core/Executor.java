@@ -1,10 +1,13 @@
 package main.core;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import main.conf.ConfigHandler;
+import main.conf.ConnectionConfiguration;
 import main.core.commands.Commands;
 import main.server.ServerConnectionManager;
 import main.util.MessageHandler;
