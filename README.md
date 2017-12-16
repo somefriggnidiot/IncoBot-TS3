@@ -1,4 +1,4 @@
-# CONBOT
+# IncoBot TS3
 Interactive console application for TS3 server administration, featuring front-and-back-end operation of most aspects.
 
 # Current Features
