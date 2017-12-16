@@ -1,12 +1,28 @@
-# conbot
-Interactive console application for TS3 server administration.
+# CONBOT
+Interactive console application for TS3 server administration, featuring front-and-back-end operation of most aspects.
 
-# Objectives  
+# Current Features
+Nada
+
+# Upcoming Features
+## Passive Administration
+
+## Active Administration
+### UserInfo
+Dual-side support for listing information pertaining to connected users.
+
+## Communication Abilities
+### Ping/Pong
+Dual-side support for simple bot health-check by having it return a simple phrase when pinged.
+
+# Long-Term Goals  
 ## Passive Administration
 ### Idle Check 
 Provide a way to easily manage idle users by either messaging, moving, or kicking after a specified threshold. 
+### Passive Role Assignment
+Allow the bot to assign roles to users who match certain criteria. More info TBD.
 
-## Administration Commands
+## Active Administration
 ### Kick
 Remote and back-end support for kicking players from the server.
 ### Move
