@@ -7,16 +7,14 @@ import main.core.Executor;
 import main.core.commands.Commands;
 import main.server.listeners.TextMessageListener;
 import main.util.MessageHandler;
-import main.util.MessageMode;
-import main.util.Util;
 
 /**
  * Logic and helper functions used to handle the firing of a {@link TextMessageListener}
  */
 public class TextMessageHandler {
    private final Integer botId = Executor.getServer("testInstance").getBotId();
-   TextMessageEvent event;
-   String message;
+   private TextMessageEvent event;
+   private String message;
 
    public TextMessageHandler(TextMessageEvent event, boolean consoleLogging, boolean fileLogging) {
       this.event = event;
@@ -24,10 +22,11 @@ public class TextMessageHandler {
 
       if (message.startsWith(Commands.getPrefix())) {
          try {
-            Commands.handle(event.getMessage());
+            Commands.handle(event);
          } catch (Exception e) {
-            new MessageHandler(Level.INFO, e.getMessage());
-            new MessageHandler(MessageMode.RETURN_TO_SENDER, e.getMessage(), event);
+            new MessageHandler(e.getMessage())
+                .sendToConsoleWith(Level.INFO)
+                .returnToSender(event);
          }
       }
 
@@ -42,7 +41,6 @@ public class TextMessageHandler {
 
    private void logToFile() {
       // TODO Auto-generated method stub
-      return;
    }
 
    /**
@@ -52,30 +50,27 @@ public class TextMessageHandler {
    private void logToConsole() {
       final int invokerId = event.getInvokerId();
       final TextMessageTargetMode target = event.getTargetMode();
-      final String targetMode = target.toString().toLowerCase();
       final String invokerUid = event.getInvokerUniqueId();
       final String invokerName = event.getInvokerName();
-      final String message = event.getMessage();
 
-      String logMessage;
-      logMessage = Util.timeStamp() + "[MESSAGE] ";
-
-      if (target != TextMessageTargetMode.CLIENT
-          && invokerId != botId) { //User sent server/channel message.
-         logMessage += invokerName + " (" + invokerUid + ") to " + targetMode + ": " + message;
-      } else if (target == TextMessageTargetMode.CLIENT
-          && invokerId != botId) { //User sent private message to bot.
-         logMessage += invokerName + " (" + invokerUid + ") to BOT: " + message;
-      } else if (target != TextMessageTargetMode.CLIENT
-          && invokerId == botId) { //Bot sent server/channel message.
-         logMessage += "BOT to " + targetMode + ": " + message;
+      if (target != TextMessageTargetMode.CLIENT && invokerId != botId) {
+         //User sent server/channel message.
+         new MessageHandler(String.format("%s (%s) to %s: %s", invokerName, invokerUid, target,
+             message))
+             .sendToConsoleWith("MESSAGE");
+      } else if (target == TextMessageTargetMode.CLIENT && invokerId != botId) {
+         //User sent private message to bot.
+         new MessageHandler(String.format("%s to BOT: %s", invokerName, message))
+             .sendToConsoleWith("MESSAGE");
+      } else if (target != TextMessageTargetMode.CLIENT) {
+         //Bot sent server/channel message.
+         new MessageHandler(String.format("BOT to SERVER: %s", message)).sendToConsoleWith
+             ("MESSAGE");
       } else { //Bot sent private message to user.
          final String targetUser = Executor.getServer("testInstance").getApi()
              .getClientInfo(event.getInt("target")).getNickname();
-         logMessage += "BOT to " + targetUser + ": " + message;
+         new MessageHandler(String.format("BOT to %s: %s", targetUser, message))
+             .sendToConsoleWith("MESSAGE");
       }
-
-//         new MessageHandler("[MESSAGE]", logMessage);
-      System.out.println(logMessage);
    }
 }
