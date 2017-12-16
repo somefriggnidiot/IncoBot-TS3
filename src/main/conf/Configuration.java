@@ -2,23 +2,31 @@ package main.conf;
 
 import java.util.logging.Level;
 
+/**
+ * DTO for the general configuration of the program.
+ */
 public class Configuration {
-  private static boolean setupComplete;
-  private static Level loggingLevel;
 
-  public static boolean isSetupComplete() {
-    return setupComplete;
-  }
+   private static boolean setupComplete;
+   private static Level loggingLevel;
 
-  public static void setSetupComplete(boolean setupComplete) {
-    Configuration.setupComplete = setupComplete;
-  }
+   /** Returns whether or not the initial setup has been completed. */
+   public static boolean isSetupComplete() {
+      return setupComplete;
+   }
 
-  public static Level getLoggingLevel() {
-    return loggingLevel;
-  }
+   /** Sets whether or not the initial setup has been completed. */
+   public static void setSetupComplete(boolean setupComplete) {
+      Configuration.setupComplete = setupComplete;
+   }
 
-  public static void setLoggingLevel(Level loggingLevel) {
-    Configuration.loggingLevel = loggingLevel;
-  }
+   /** Returns the logging level of the program. */
+   public static Level getLoggingLevel() {
+      return loggingLevel;
+   }
+
+   /** Sets the logging level of the program.  */
+   public static void setLoggingLevel(Level loggingLevel) {
+      Configuration.loggingLevel = loggingLevel;
+   }
 }

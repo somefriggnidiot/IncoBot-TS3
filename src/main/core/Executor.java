@@ -1,13 +1,10 @@
 package main.core;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import main.conf.ConfigHandler;
-import main.conf.ConnectionConfiguration;
 import main.core.commands.Commands;
 import main.server.ServerConnectionManager;
 import main.util.MessageHandler;
@@ -17,7 +14,6 @@ import main.util.exception.CommandNotFoundException;
  * Main class of the SFITS3 bot program.
  */
 public class Executor implements Runnable {
-
    private final static Map<String, ServerConnectionManager> scmMap = new HashMap<>();
    static BufferedReader in;
    static Boolean quit = false;
@@ -42,6 +38,8 @@ public class Executor implements Runnable {
       Thread t1 = new Thread(new Executor());
       t1.start();
 
+      //First Time Setup check will go here.
+
       scmMap.put("testInstance", new ServerConnectionManager());
       new MessageHandler(Level.INFO, "Connecting...");
       scmMap.get("testInstance").connect();
@@ -51,11 +49,11 @@ public class Executor implements Runnable {
        *
        */
       Boolean exit = false;
-      int thirtySecondCounter = 600;
+      int fiveMinuteTimer = 600;
       do {
          Thread.sleep(500);
-         if (thirtySecondCounter++ == 600) {
-            thirtySecondCounter = 0;
+         if (fiveMinuteTimer++ == 600) {
+            fiveMinuteTimer = 0;
             new MessageHandler(Level.INFO, "System Running");
          }
 
@@ -93,7 +91,6 @@ public class Executor implements Runnable {
       String msg = null;
 
       while (true) {
-
 
          try {
             msg = in.readLine();

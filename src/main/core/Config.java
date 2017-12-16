@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import main.conf.Configuration;
 
+/**
+ * @deprecated Use {@link Configuration}
+ */
+@Deprecated
 public class Config {
-
    public static final int
        registeredGroupId = 36077,
        communityMemberGroupId = 46495,
