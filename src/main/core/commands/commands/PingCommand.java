@@ -44,6 +44,5 @@ public class PingCommand {
       } else if (mode == TextMessageTargetMode.CLIENT) {
          new MessageHandler(returnText).sendToConsoleWith("COMMAND RESPONSE").returnToSender(event);
       }
-
    }
 }

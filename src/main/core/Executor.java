@@ -9,7 +9,6 @@ import main.core.commands.Commands;
 import main.server.ServerConnectionManager;
 import main.util.MessageHandler;
 import main.util.exception.CommandNotFoundException;
-import sun.plugin2.message.Message;
 
 /**
  * Main class of the SFITS3 bot program.
