@@ -2,7 +2,11 @@
 Interactive console application for TS3 server administration, featuring front-and-back-end operation of most aspects.
 
 # Current Features
-Nada
+## Communication Abilities
+### Ping/Pong
+Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
+**Syntax:** !ping  
+**Use:** Elicits a basic response ("Pong!") from the bot to function as a basic health check or open a line of communication with the query.  
 
 # Upcoming Features
 ## Passive Administration
@@ -12,8 +16,6 @@ Nada
 Dual-side support for listing information pertaining to connected users.
 
 ## Communication Abilities
-### Ping/Pong
-Dual-side support for simple bot health-check by having it return a simple phrase when pinged.
 
 # Long-Term Goals  
 ## Passive Administration
