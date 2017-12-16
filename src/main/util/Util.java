@@ -15,6 +15,6 @@ public class Util {
     */
    public static String timeStamp() {
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-      return ("[" + dateFormat.format(System.currentTimeMillis()) + "] ");
+      return (dateFormat.format(System.currentTimeMillis()));
    }
 }

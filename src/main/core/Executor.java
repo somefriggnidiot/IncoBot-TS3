@@ -32,7 +32,7 @@ public class Executor implements Runnable {
        * One-off program setup before main execution loop.
        */
 
-      new MessageHandler(Level.INFO, "System Initialized");
+      new MessageHandler("System Initialized").sendToConsoleWith(Level.INFO);
 
       in = new BufferedReader(new InputStreamReader(System.in));
       Thread t1 = new Thread(new Executor());
@@ -41,7 +41,7 @@ public class Executor implements Runnable {
       //First Time Setup check will go here.
 
       scmMap.put("testInstance", new ServerConnectionManager());
-      new MessageHandler(Level.INFO, "Connecting...");
+      new MessageHandler("Connecting...").sendToConsoleWith(Level.INFO);
       scmMap.get("testInstance").connect();
 
       /*
@@ -54,11 +54,11 @@ public class Executor implements Runnable {
          Thread.sleep(500);
          if (fiveMinuteTimer++ == 600) {
             fiveMinuteTimer = 0;
-            new MessageHandler(Level.INFO, "System Running");
+            new MessageHandler("System Running").sendToConsoleWith(Level.INFO);
          }
 
          if (quit) {
-            new MessageHandler(Level.INFO, "Disconnecting bot.");
+            new MessageHandler("Disconnecting From Server").sendToConsoleWith(Level.INFO);
             exit = true;
          }
 
@@ -91,18 +91,15 @@ public class Executor implements Runnable {
       String msg = null;
 
       while (true) {
-
          try {
             msg = in.readLine();
             Commands.handle(msg);
-         } catch (IllegalArgumentException iae) {
-            new MessageHandler(Level.INFO, iae.getMessage());
-         } catch (CommandNotFoundException cnfe) {
-            new MessageHandler(Level.INFO, cnfe.getMessage());
-         } catch (Exception e) {
-            System.out.println(e);
+         } catch (IllegalArgumentException | CommandNotFoundException e) {
+            new MessageHandler(e.getMessage()).sendToConsoleWith(Level.INFO);
+         } catch (Exception ex) {
+            new MessageHandler(ex.getMessage()).sendToConsoleWith(Level.WARNING);
          }
-         if (msg.equals("!forcequit")) {
+         if ("!forcequit".equals(msg)) {
             quit = true;
             break;
          }

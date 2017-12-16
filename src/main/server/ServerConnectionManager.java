@@ -68,7 +68,7 @@ public class ServerConnectionManager {
    public void connect() {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
-            new MessageHandler(Level.CONFIG, "Connection initiated.");
+            new MessageHandler("Connection Initiated").sendToConsoleWith(Level.CONFIG);
             serverQuery = new TS3Query(config);
             serverQuery.connect();
 
@@ -80,12 +80,12 @@ public class ServerConnectionManager {
             api.addTS3Listeners(new ClientConnectListener());
 
             //TODO: Remove; added for testing.
-            api.sendServerMessage("Blah");
+            new MessageHandler("Blah!").sendToServer();
             for (Client client : api.getClients()) {
-               api.sendPrivateMessage(client.getId(), "asdfa");
+               new MessageHandler("I'm alive!").sendToUser(client.getId());
             }
 
-            new MessageHandler(Level.INFO, "Connected!");
+            new MessageHandler("Connected!").sendToConsoleWith(Level.INFO);
          }
       });
    }
@@ -159,8 +159,8 @@ public class ServerConnectionManager {
       api.addTS3Listeners(new TS3EventAdapter() {
          @Override
          public void onTextMessage(TextMessageEvent messageEvent) {
-            new MessageHandler(serverDebugLevel, Level.ALL, Util.timeStamp() + "[MESSAGE - SERVER] "
-                + messageEvent.getInvokerName() + " -- " + messageEvent.getMessage());
+            new MessageHandler(String.format("[MESSAGE - SERVER] %s -- %s", messageEvent
+                .getInvokerName(), messageEvent.getMessage()));
          }
       });
    }
