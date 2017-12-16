@@ -52,23 +52,4 @@ public class MessageHandler {
       api.sendPrivateMessage(clientId, message);
       return this;
    }
-
-//   private void handleConsoleMessage() {
-//      if (!configDebugLevel.getName().isEmpty() && messageLevel.intValue() >= configDebugLevel
-//          .intValue()) {
-//         System.out.println(Util.timeStamp() + "[" + messageLevel.getName() + "] " + message);
-//      } else if (configDebugLevel.getName().isEmpty() || configDebugLevel == null) {
-//         System.out.println(prefix + " " + message);
-//      }
-//   }
-//
-//   private void handleServerMessage() {
-//      TS3Api api = Executor.getServer("testInstance").getApi();
-//      api.sendServerMessage(message);
-//   }
-//
-//   private void handlePrivateMessage(final TextMessageEvent event) {
-//      TS3Api api = Executor.getServer("testInstance").getApi();
-//      api.sendPrivateMessage(event.getInvokerId(), message);
-//   }
 }

@@ -161,8 +161,6 @@ public class ServerConnectionManager {
          public void onTextMessage(TextMessageEvent messageEvent) {
             new MessageHandler(String.format("[MESSAGE - SERVER] %s -- %s", messageEvent
                 .getInvokerName(), messageEvent.getMessage()));
-//            new MessageHandler(serverDebugLevel, Level.ALL, Util.timeStamp() + "[MESSAGE - SERVER] "
-//                + messageEvent.getInvokerName() + " -- " + messageEvent.getMessage());
          }
       });
    }

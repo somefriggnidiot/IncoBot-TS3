@@ -92,7 +92,6 @@ public class Executor implements Runnable {
       String msg = null;
 
       while (true) {
-
          try {
             msg = in.readLine();
             Commands.handle(msg);
