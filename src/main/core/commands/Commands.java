@@ -3,6 +3,7 @@ package main.core.commands;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import main.core.commands.commands.KickCommand;
 import main.util.ErrorMessages;
 import main.core.commands.commands.PingCommand;
 import main.util.exception.CommandNotFoundException;
@@ -43,7 +44,7 @@ public class Commands {
     * @param event the contents of the message being checked.
     * @throws CommandNotFoundException if the command being referenced is not known.
     */
-   public static void handle(TextMessageEvent event) throws CommandNotFoundException {
+   public static void handle(TextMessageEvent event) throws CommandNotFoundException, Exception {
       validate(event.getMessage());
       String input = event.getMessage();
 
@@ -53,6 +54,9 @@ public class Commands {
       switch (action.toLowerCase()) {
          case "ping":
             new PingCommand(event);
+            return;
+         case "kick":
+            new KickCommand(event);
             return;
          default:
             throw (new CommandNotFoundException(command[0]));
