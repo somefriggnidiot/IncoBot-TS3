@@ -4,8 +4,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.core.commands.commands.KickCommand;
-import main.util.ErrorMessages;
 import main.core.commands.commands.PingCommand;
+import main.util.ErrorMessages;
 import main.util.exception.CommandNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
  * Core command handler class. In charge of routing commands to their correct handlers.
  */
 public class Commands {
+
    private static String prefix = "!";
 
    /**
@@ -28,6 +29,9 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
+         case "kick":
+            new KickCommand(input);
+            return;
          case "ping":
             new PingCommand();
             return;
@@ -44,7 +48,7 @@ public class Commands {
     * @param event the contents of the message being checked.
     * @throws CommandNotFoundException if the command being referenced is not known.
     */
-   public static void handle(TextMessageEvent event) throws CommandNotFoundException, Exception {
+   public static void handle(TextMessageEvent event) throws CommandNotFoundException {
       validate(event.getMessage());
       String input = event.getMessage();
 
@@ -52,18 +56,20 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
-         case "ping":
-            new PingCommand(event);
-            return;
          case "kick":
             new KickCommand(event);
+            return;
+         case "ping":
+            new PingCommand(event);
             return;
          default:
             throw (new CommandNotFoundException(command[0]));
       }
    }
 
-   /** Returns the prefix used to denote commands. */
+   /**
+    * Returns the prefix used to denote commands.
+    */
    public static String getPrefix() {
       return prefix;
    }
