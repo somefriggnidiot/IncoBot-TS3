@@ -36,8 +36,6 @@ Provide a way to easily manage idle users by either messaging, moving, or kickin
 Allow the bot to assign roles to users who match certain criteria. More info TBD.
 
 ## Active Administration
-### Kick
-Remote and back-end support for kicking players from the server.
 ### Move
 Remote and back-end support for moving players between channels.
 ### Ban
