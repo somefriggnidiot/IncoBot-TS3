@@ -2,6 +2,17 @@
 Interactive console application for TS3 server administration, featuring front-and-back-end operation of most aspects.
 
 # Current Features
+Syntax notes:
+- Any command with multiple syntaxes will allow any of those listed.
+- Parameters with [brackets] are required. Parameters with (parentheses) are optional.
+- Do not include the brackets or parentheses when calling the command.
+
+## Active Administration
+### Kick
+Dual-side support for forced disconnects of connected clients.
+**Syntax:** !kick [clientId] [reason]
+**Use:** Kicks the client matching the clientId from the server with the provided reason.
+
 ## Communication Abilities
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
