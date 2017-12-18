@@ -9,8 +9,8 @@ Syntax notes:
 
 ## Active Administration
 ### Kick
-Dual-side support for forced disconnects of connected clients.
-**Syntax:** !kick [clientId] [reason]
+Dual-side support for forced disconnects of connected clients.  
+**Syntax:** !kick [clientId] [reason]  
 **Use:** Kicks the client matching the clientId from the server with the provided reason.
 
 ## Communication Abilities
