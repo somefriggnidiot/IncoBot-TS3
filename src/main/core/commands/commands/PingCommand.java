@@ -2,9 +2,7 @@ package main.core.commands.commands;
 
 import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
-import java.util.logging.Level;
 import main.util.MessageHandler;
-import main.util.MessageMode;
 
 /**
  * Command used to do a basic health-check of the application.

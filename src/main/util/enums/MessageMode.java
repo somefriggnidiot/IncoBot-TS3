@@ -1,4 +1,4 @@
-package main.util;
+package main.util.enums;
 
 public enum MessageMode {
    CONSOLE(1),

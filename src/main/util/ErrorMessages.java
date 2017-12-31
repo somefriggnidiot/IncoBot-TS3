@@ -4,7 +4,8 @@ package main.util;
  * Generic error messages to be used across the application.
  */
 public class ErrorMessages {
-
+   public final static String ACCESS_LIST_CANNOT_USE_COMMAND = "The '%s' access list does not "
+       + "have permissions to use command '%s'";
    public final static String CANNOT_TARGET_BOT = "You cannot target the bot with that "
        + "command.";
    public final static String COMMAND_NOT_FOUND = "%s is not a supported command.";
@@ -16,4 +17,5 @@ public class ErrorMessages {
    public final static String NO_USER_WITH_ID = "No user is currently connected using id: %s";
    public final static String UNKNOWN_ERROR = "Somewhere, something broke. Contact someone who "
        + "knows what they're doing.";
+
 }
