@@ -13,9 +13,10 @@ public class ErrorMessages {
        + " prefix!";
    public final static String INPUT_BLANK = "Space may be the final frontier, but sending me spaces"
        + " does nothing!";
+   public final static String LEVEL_LOWER_THAN_REQUIRED = "The provided access level of %s is "
+       + "lower than the required access level of %s.";
    public final static String MISSING_ARGUMENT = "Command '%s' requires argument '%s'.";
    public final static String NO_USER_WITH_ID = "No user is currently connected using id: %s";
    public final static String UNKNOWN_ERROR = "Somewhere, something broke. Contact someone who "
        + "knows what they're doing.";
-
 }

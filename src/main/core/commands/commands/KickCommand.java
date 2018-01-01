@@ -3,7 +3,9 @@ package main.core.commands.commands;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import java.util.logging.Level;
+import main.conf.ConfigHandler;
 import main.core.Executor;
+import main.core.commands.AccessManager;
 import main.server.ServerConnectionManager;
 import main.util.ErrorMessages;
 import main.util.MessageHandler;
@@ -21,6 +23,7 @@ public class KickCommand {
    private TextMessageEvent event;
    private ServerConnectionManager instance;
    private TS3ApiAsync api;
+   private AccessManager accessManager = new AccessManager(new ConfigHandler(), AccessLevel.MODERATOR);
 
    /**
     * Create a KickCommand instance to handle console execution.
@@ -39,28 +42,25 @@ public class KickCommand {
     * Create a KickCommand instance to handle client execution.
     *
     * @param event the {@link TextMessageEvent} containing the call for this command.
+    * @throws AuthorizationException if the invoker of this command does not have authorization
+    * to execute it.
     */
    public KickCommand(TextMessageEvent event) throws AuthorizationException {
       this.event = event;
       this.instance = Executor.getServer("testInstance");
       this.api = instance.getApiAsync();
 
-      int[] invokerGroups = api.getClientInfo(event.getInvokerId()).getUninterruptibly()
-          .getServerGroups();
-      AccessManager accessManager = new AccessManager(AccessLevel.MODERATOR);
-      AccessLevel invokerAccessLevel = accessManager.getAccessLevel(invokerGroups);
+      AccessLevel invokerAccessLevel = accessManager.getAccessLevel(api.getClientInfo(
+          event.getInvokerId()).getUninterruptibly().getServerGroups());
 
-      if (accessManager.hasAccess(invokerAccessLevel)) {
-         try {
-            handle(event.getMessage());
-         } catch (ArgumentMissingException | IllegalTargetException | InvalidUserIdException e) {
-            new MessageHandler(e.getMessage()).sendToUser(event.getInvokerId());
-         }
-      } else {
+      try {
+         accessManager.checkAccess(invokerAccessLevel);
+         handle(event.getMessage());
+      } catch (AuthorizationException e) {
          throw new AuthorizationException(invokerAccessLevel, "!kick");
+      } catch (ArgumentMissingException | IllegalTargetException | InvalidUserIdException e) {
+         new MessageHandler(e.getMessage()).sendToUser(event.getInvokerId());
       }
-
-
    }
 
    private void handle(String input) throws ArgumentMissingException, IllegalTargetException,

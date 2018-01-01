@@ -14,7 +14,7 @@ import main.util.exception.CommandNotFoundException;
  * Main class of the SFITS3 bot program.
  */
 public class Executor implements Runnable {
-   private final static Map<String, ServerConnectionManager> scmMap = new HashMap<>();
+   private final static Map<String, ServerConnectionManager> instances = new HashMap<>();
    static BufferedReader in;
    static Boolean quit = false;
 
@@ -40,9 +40,10 @@ public class Executor implements Runnable {
 
       //First Time Setup check will go here.
 
-      scmMap.put("testInstance", new ServerConnectionManager());
+      //Load and connect instance.
+      instances.put("testInstance", new ServerConnectionManager());
       new MessageHandler("Connecting...").sendToConsoleWith(Level.INFO);
-      scmMap.get("testInstance").connect();
+      instances.get("testInstance").connect();
 
       /*
        * EXECUTION LOOP
@@ -69,7 +70,7 @@ public class Executor implements Runnable {
        *
        * One-off program tear-down.
        */
-      scmMap.get("testInstance").disconnect();
+      instances.get("testInstance").disconnect();
 
    }
 
@@ -80,7 +81,7 @@ public class Executor implements Runnable {
     * @return the {@code ServerConnectionManager} if it exists, otherwise {@code null}.
     */
    public static ServerConnectionManager getServer(String instanceName) {
-      return scmMap.get(instanceName);
+      return instances.get(instanceName);
    }
 
    /**

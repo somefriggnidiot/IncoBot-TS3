@@ -8,6 +8,34 @@ Syntax notes:
 - Parameters with [brackets] are required. Parameters with (parentheses) are optional.
 - Do not include the brackets or parentheses when calling the command.
 
+## Passive Administration
+### Access Control Lists
+Grant clients the ability to use certain levels of commands, or prevent them from using commands 
+altogether by adding them to a controlled server group. Groups can be used as an access group by 
+adding the group ID to the ServerGroupAccessConfiguration.yaml file.
+
+Example Configuration for Groups:
+```yaml
+owner-groups:
+- 10101
+
+super-admin-groups:
+
+admin-groups:
+- 10102
+- 10103
+
+moderator-groups:
+
+sponsor-groups:
+- 10110
+
+blacklisted-groups:
+- 10104
+- 10105
+- 10106
+```
+
 ## Active Administration
 ### Kick
 Dual-side support for forced disconnects of connected clients.  

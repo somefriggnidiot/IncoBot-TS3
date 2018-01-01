@@ -32,5 +32,6 @@ sponsor-groups:
 # This group cannot access any functionality of
 #   this program.
 blacklisted-groups:
+- 8
 - 10
 - 11

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * DTO for server-group access lists.
  */
-public final class ServerGroupAccessConfiguration {
+public class ServerGroupAccessConfiguration {
    @JsonProperty("owner-groups")
    private List<Integer> ownerGroups;
    @JsonProperty("super-admin-groups")

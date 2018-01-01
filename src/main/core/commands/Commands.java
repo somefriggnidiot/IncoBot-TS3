@@ -48,8 +48,11 @@ public class Commands {
     *
     * @param event the contents of the message being checked.
     * @throws CommandNotFoundException if the command being referenced is not known.
+    * @throws AuthorizationException if the invoking user does not have clearance to use the command
+    * being referenced.
     */
-   public static void handle(TextMessageEvent event) throws CommandNotFoundException, AuthorizationException {
+   public static void handle(TextMessageEvent event)
+       throws CommandNotFoundException, AuthorizationException {
       validate(event.getMessage());
       String input = event.getMessage();
 

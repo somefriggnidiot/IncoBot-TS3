@@ -33,7 +33,7 @@ public class ConfigHandler {
     * @return a {@link ConnectionConfiguration} object with the contents of the file, or null if
     * the file cannot be read.
     */
-   public static ServerGroupAccessConfiguration readServerGroupAccessConfig(final File file) {
+   public ServerGroupAccessConfiguration readServerGroupAccessConfig(final File file) {
       final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
       try {

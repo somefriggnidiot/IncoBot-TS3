@@ -1,15 +1,19 @@
-package main.core.commands.commands;
+package main.core.commands;
 
 import java.io.File;
 import java.util.List;
 import main.conf.ConfigHandler;
 import main.conf.ServerGroupAccessConfiguration;
 import main.util.enums.AccessLevel;
+import main.util.exception.AuthorizationException;
 
+/**
+ * Utility class for handling access lists / permissions in commands.
+ */
 public class AccessManager {
-   private ServerGroupAccessConfiguration groupAccessConfig = ConfigHandler
-       .readServerGroupAccessConfig(
-           new File("./config/ServerGroupAccess.yaml"));
+
+   private ConfigHandler configHandler;
+   private ServerGroupAccessConfiguration groupAccessConfig;
    private AccessLevel requiredLevel;
 
    /**
@@ -17,23 +21,33 @@ public class AccessManager {
     *
     * @param requiredLevel the minimum {@link AccessLevel} required by this instance.
     */
-   public AccessManager(AccessLevel requiredLevel) {
+   public AccessManager(ConfigHandler configHandler, AccessLevel requiredLevel) {
       this.requiredLevel = requiredLevel;
+      this.configHandler = configHandler;
+      this.groupAccessConfig = configHandler.readServerGroupAccessConfig(
+              new File("./config/ServerGroupAccess.yaml"));
    }
 
    /**
-    * Determines if the provided {@link AccessLevel} is at least as high as that required by this
-    * {@link AccessManager}
+    * Continues execution if the level being checked passes an access check.
     *
-    * @param query the {@link AccessLevel} to be compared to the required {@code AccessLevel} of
-    * this {@code AccessManager}.
-    * @return {@code true} if the provided level is the same as or higher than the required level
-    * for this {@code AccessManager}, otherwise {@code false}.
+    * @param query the {@link AccessLevel} being compared to the minimum acceptable value for
+    * this {@link AccessManager}
+    * @throws AuthorizationException if the provided level does not pass an authorization check.
     */
-   public boolean hasAccess(AccessLevel query) {
-      return query.getValue() >= requiredLevel.getValue();
+   public void checkAccess(AccessLevel query) throws AuthorizationException {
+      if (query.getValue() < requiredLevel.getValue()) {
+         throw new AuthorizationException(query.toString(), requiredLevel.toString());
+      }
    }
 
+   /**
+    * Determines the single {@link AccessLevel} to be assigned to a client.
+    *
+    * @param serverGroups an array of TeamSpeak 3 ServerGroup IDs of groups to which the client
+    * belongs.
+    * @return the applicable {@link AccessLevel} of the client.
+    */
    public AccessLevel getAccessLevel(int[] serverGroups) {
       AccessLevel accessLevel = AccessLevel.DEFAULT;
       List<Integer> ownerGroups = groupAccessConfig.getOwnerGroups();
@@ -51,16 +65,18 @@ public class AccessManager {
             accessLevel = AccessLevel.SUPER_ADMIN;
          } else if (ifApplicable(accessLevel, AccessLevel.ADMIN, adminGroups)
              && adminGroups.contains(serverGroup)) {
-            accessLevel =  AccessLevel.ADMIN;
+            accessLevel = AccessLevel.ADMIN;
          } else if (ifApplicable(accessLevel, AccessLevel.MODERATOR, moderatorGroups)
              && moderatorGroups.contains(serverGroup)) {
-            accessLevel =  AccessLevel.MODERATOR;
+            accessLevel = AccessLevel.MODERATOR;
          } else if (ifApplicable(accessLevel, AccessLevel.SPONSOR, sponsorGroups)
              && sponsorGroups.contains(serverGroup)) {
-            accessLevel =  AccessLevel.SPONSOR;
-         } else if (ifApplicable(accessLevel, AccessLevel.BLACKLISTED, blacklistGroups)
+            accessLevel = AccessLevel.SPONSOR;
+         }
+
+         if (ifApplicable(accessLevel, AccessLevel.BLACKLISTED, blacklistGroups)
              && blacklistGroups.contains(serverGroup)) {
-            accessLevel =  AccessLevel.BLACKLISTED;
+            accessLevel = AccessLevel.BLACKLISTED;
          }
       }
 
@@ -69,7 +85,16 @@ public class AccessManager {
 
    private boolean ifApplicable(AccessLevel currentAccessLevel, AccessLevel checkedAccessLevel,
        List<Integer> groupList) {
-      return (groupList != null
-          && (currentAccessLevel.getValue() < checkedAccessLevel.getValue()));
+
+      if (groupList == null) {
+         return false;
+      }
+
+      if (checkedAccessLevel != AccessLevel.BLACKLISTED) {
+         return (currentAccessLevel.getValue() < checkedAccessLevel.getValue());
+      } else {
+         return (currentAccessLevel == AccessLevel.DEFAULT
+             || currentAccessLevel == AccessLevel.SPONSOR);
+      }
    }
 }
