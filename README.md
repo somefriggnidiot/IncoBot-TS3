@@ -39,12 +39,14 @@ blacklisted-groups:
 ## Active Administration
 ### Kick
 Dual-side support for forced disconnects of connected clients.  
+**Minimum Permission Level:** Moderator  
 **Syntax:** !kick [clientId] [reason]  
 **Use:** Kicks the client matching the clientId from the server with the provided reason.
 
 ## Communication Abilities
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
+**Minimum Permission Level:** Default  
 **Syntax:** !ping  
 **Use:** Elicits a basic response ("Pong!") from the bot to function as a basic health check or open a line of communication with the query.  
 
