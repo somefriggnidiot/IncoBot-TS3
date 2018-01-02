@@ -12,9 +12,10 @@ public class ConfigHandler {
 
    /**
     * Reads a YAML file and maps the contents to a {@link ConnectionConfiguration} object.
+    *
     * @param file the path of the YAML file.
-    * @return a {@link ConnectionConfiguration} object with the contents of the file, or null if
-    * the file cannot be read.
+    * @return a {@link ConnectionConfiguration} object with the contents of the file, or null if the
+    * file cannot be read.
     */
    public static ConnectionConfiguration readConnectionConfig(final File file) {
       final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
@@ -29,9 +30,10 @@ public class ConfigHandler {
 
    /**
     * Reads a YAML file and maps the contents to a {@link ServerGroupAccessConfiguration} object.
+    *
     * @param file the path of the YAML file.
-    * @return a {@link ConnectionConfiguration} object with the contents of the file, or null if
-    * the file cannot be read.
+    * @return a {@link ConnectionConfiguration} object with the contents of the file, or null if the
+    * file cannot be read.
     */
    public ServerGroupAccessConfiguration readServerGroupAccessConfig(final File file) {
       final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());

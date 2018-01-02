@@ -11,28 +11,27 @@ import main.util.exception.AuthorizationException;
  * Utility class for handling access lists / permissions in commands.
  */
 public class AccessManager {
-
-   private ConfigHandler configHandler;
    private ServerGroupAccessConfiguration groupAccessConfig;
    private AccessLevel requiredLevel;
 
    /**
     * Creates a new {@link AccessManager} with a given minimum required {@link AccessLevel}.
     *
+    * @param configHandler the {@link ConfigHandler} that provides the {@link
+    * ServerGroupAccessConfiguration} to be used for this {@code AccessManager}
     * @param requiredLevel the minimum {@link AccessLevel} required by this instance.
     */
    public AccessManager(ConfigHandler configHandler, AccessLevel requiredLevel) {
       this.requiredLevel = requiredLevel;
-      this.configHandler = configHandler;
       this.groupAccessConfig = configHandler.readServerGroupAccessConfig(
-              new File("./config/ServerGroupAccess.yaml"));
+          new File("./config/ServerGroupAccess.yaml"));
    }
 
    /**
     * Continues execution if the level being checked passes an access check.
     *
-    * @param query the {@link AccessLevel} being compared to the minimum acceptable value for
-    * this {@link AccessManager}
+    * @param query the {@link AccessLevel} being compared to the minimum acceptable value for this
+    * {@link AccessManager}
     * @throws AuthorizationException if the provided level does not pass an authorization check.
     */
    public void checkAccess(AccessLevel query) throws AuthorizationException {

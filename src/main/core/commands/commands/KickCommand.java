@@ -23,7 +23,6 @@ public class KickCommand {
    private TextMessageEvent event;
    private ServerConnectionManager instance;
    private TS3ApiAsync api;
-   private AccessManager accessManager = new AccessManager(new ConfigHandler(), AccessLevel.MODERATOR);
 
    /**
     * Create a KickCommand instance to handle console execution.
@@ -49,6 +48,8 @@ public class KickCommand {
       this.event = event;
       this.instance = Executor.getServer("testInstance");
       this.api = instance.getApiAsync();
+
+      AccessManager accessManager = new AccessManager(new ConfigHandler(), AccessLevel.MODERATOR);
 
       AccessLevel invokerAccessLevel = accessManager.getAccessLevel(api.getClientInfo(
           event.getInvokerId()).getUninterruptibly().getServerGroups());

@@ -16,10 +16,6 @@ import main.util.exception.AuthorizationException;
  */
 public class PingCommand {
    private TextMessageEvent event;
-   private ServerConnectionManager instance;
-   private TS3ApiAsync api;
-   private AccessManager accessManager = new AccessManager(new ConfigHandler(),
-       AccessLevel.DEFAULT);
 
    /**
     * Create a PingCommand instance to handle console executions.
@@ -37,9 +33,11 @@ public class PingCommand {
     */
    public PingCommand(TextMessageEvent event) throws AuthorizationException {
       this.event = event;
-      this.instance = Executor.getServer("testInstance");
-      this.api = instance.getApiAsync();
+      ServerConnectionManager instance = Executor.getServer("testInstance");
+      TS3ApiAsync api = instance.getApiAsync();
 
+      AccessManager accessManager = new AccessManager(new ConfigHandler(),
+          AccessLevel.DEFAULT);
       AccessLevel invokerAccessLevel = accessManager.getAccessLevel(api.getClientInfo(event
           .getInvokerId()).getUninterruptibly().getServerGroups());
 
