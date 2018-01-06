@@ -5,7 +5,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.core.commands.commands.KickCommand;
 import main.core.commands.commands.PingCommand;
-import main.util.ErrorMessages;
+import main.util.Messages;
 import main.util.exception.AuthorizationException;
 import main.util.exception.CommandNotFoundException;
 import org.apache.commons.lang3.StringUtils;
@@ -79,8 +79,8 @@ public class Commands {
    }
 
    private static void validate(final String input) {
-      checkArgument(!StringUtils.isBlank(input), ErrorMessages.INPUT_BLANK);
+      checkArgument(!StringUtils.isBlank(input), Messages.INPUT_BLANK);
       checkArgument(input.startsWith(prefix),
-          String.format(ErrorMessages.COMMAND_PREFIX_NOT_RECOGNIZED, input.substring(0, 1)));
+          String.format(Messages.COMMAND_PREFIX_NOT_RECOGNIZED, input.substring(0, 1)));
    }
 }

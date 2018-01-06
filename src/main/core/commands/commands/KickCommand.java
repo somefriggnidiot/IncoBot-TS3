@@ -7,7 +7,7 @@ import main.conf.ConfigHandler;
 import main.core.Executor;
 import main.core.commands.AccessManager;
 import main.server.ServerConnectionManager;
-import main.util.ErrorMessages;
+import main.util.Messages;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.enums.AccessLevel;
@@ -90,7 +90,7 @@ public class KickCommand {
          if (e.getCause().getMessage().contains("invalid clientID")) {
             throw new InvalidUserIdException(String.valueOf(target));
          } else {
-            new MessageHandler(ErrorMessages.UNKNOWN_ERROR)
+            new MessageHandler(Messages.UNKNOWN_ERROR)
                 .sendToConsoleWith(Level.WARNING)
                 .sendToUser(event.getInvokerId());
          }

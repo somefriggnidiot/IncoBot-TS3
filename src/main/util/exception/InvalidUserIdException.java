@@ -1,6 +1,6 @@
 package main.util.exception;
 
-import main.util.ErrorMessages;
+import main.util.Messages;
 
 public class InvalidUserIdException extends Exception {
 
@@ -10,6 +10,6 @@ public class InvalidUserIdException extends Exception {
     * @param id the ID being targeted.
     */
    public InvalidUserIdException(String id) {
-      super(String.format(ErrorMessages.NO_USER_WITH_ID, id));
+      super(String.format(Messages.NO_USER_WITH_ID, id));
    }
 }

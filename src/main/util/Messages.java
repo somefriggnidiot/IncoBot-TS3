@@ -3,7 +3,7 @@ package main.util;
 /**
  * Generic error messages to be used across the application.
  */
-public class ErrorMessages {
+public class Messages {
    public final static String ACCESS_LIST_CANNOT_USE_COMMAND = "The '%s' access list does not "
        + "have permissions to use command '%s'";
    public final static String CANNOT_TARGET_BOT = "You cannot target the bot with that "

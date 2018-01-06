@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import main.core.Config;
 import main.core.Executor;
-import main.util.ErrorMessages;
+import main.util.Messages;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.Util;
@@ -87,7 +87,7 @@ public class ClientJoinHandler {
 
       new MessageHandler(
           String.format(
-              ErrorMessages.USER_CONNECTED,
+              Messages.USER_CONNECTED,
               event.getClientNickname(),
               event.getUniqueClientIdentifier(),
               channelName))

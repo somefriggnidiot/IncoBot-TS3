@@ -1,6 +1,6 @@
 package main.util.exception;
 
-import main.util.ErrorMessages;
+import main.util.Messages;
 
 public class ArgumentMissingException extends Exception {
 
@@ -11,6 +11,6 @@ public class ArgumentMissingException extends Exception {
     * @param argument the missing required argument.
     */
    public ArgumentMissingException(String command, String argument) {
-      super(String.format(ErrorMessages.MISSING_ARGUMENT, command, argument));
+      super(String.format(Messages.MISSING_ARGUMENT, command, argument));
    }
 }
