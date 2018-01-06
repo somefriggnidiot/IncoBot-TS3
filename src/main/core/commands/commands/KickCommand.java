@@ -7,7 +7,8 @@ import main.conf.ConfigHandler;
 import main.core.Executor;
 import main.core.commands.AccessManager;
 import main.server.ServerConnectionManager;
-import main.util.ErrorMessages;
+import main.util.Messages;
+import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.enums.AccessLevel;
 import main.util.exception.ArgumentMissingException;
@@ -33,7 +34,7 @@ public class KickCommand {
       try {
          handle(input);
       } catch (ArgumentMissingException | IllegalTargetException | InvalidUserIdException e) {
-         new MessageHandler(e.getMessage()).sendToConsoleWith("COMMAND RESPONSE");
+         new MessageHandler(e.getMessage()).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
       }
    }
 
@@ -89,7 +90,7 @@ public class KickCommand {
          if (e.getCause().getMessage().contains("invalid clientID")) {
             throw new InvalidUserIdException(String.valueOf(target));
          } else {
-            new MessageHandler(ErrorMessages.UNKNOWN_ERROR)
+            new MessageHandler(Messages.ERROR_UNKNOWN_ERROR)
                 .sendToConsoleWith(Level.WARNING)
                 .sendToUser(event.getInvokerId());
          }
@@ -100,11 +101,11 @@ public class KickCommand {
       if (event != null) {
          new MessageHandler(String.format("%s attempted to kick %s from the server for: %s", event
              .getInvokerName(), targetName, reason))
-             .sendToConsoleWith("KICK");
+             .sendToConsoleWith(LogPrefix.KICK);
       } else {
          new MessageHandler(String.format("Attempting to kick %s from the server for: %s",
              targetName, reason))
-             .sendToConsoleWith("KICK");
+             .sendToConsoleWith(LogPrefix.KICK);
       }
 
       //Execute kick.

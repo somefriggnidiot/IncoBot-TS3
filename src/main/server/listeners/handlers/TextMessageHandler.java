@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import main.core.Executor;
 import main.core.commands.Commands;
 import main.server.listeners.TextMessageListener;
+import main.util.LogPrefix;
 import main.util.MessageHandler;
 
 /**
@@ -57,20 +58,20 @@ public class TextMessageHandler {
          //User sent server/channel message.
          new MessageHandler(String.format("%s (%s) to %s: %s", invokerName, invokerUid, target,
              message))
-             .sendToConsoleWith("MESSAGE");
+             .sendToConsoleWith(LogPrefix.MESSAGE);
       } else if (target == TextMessageTargetMode.CLIENT && invokerId != botId) {
          //User sent private message to bot.
          new MessageHandler(String.format("%s to BOT: %s", invokerName, message))
-             .sendToConsoleWith("MESSAGE");
+             .sendToConsoleWith(LogPrefix.MESSAGE);
       } else if (target != TextMessageTargetMode.CLIENT) {
          //Bot sent server/channel message.
          new MessageHandler(String.format("BOT to SERVER: %s", message)).sendToConsoleWith
-             ("MESSAGE");
+             (LogPrefix.MESSAGE);
       } else { //Bot sent private message to user.
          final String targetUser = Executor.getServer("testInstance").getApi()
              .getClientInfo(event.getInt("target")).getNickname();
          new MessageHandler(String.format("BOT to %s: %s", targetUser, message))
-             .sendToConsoleWith("MESSAGE");
+             .sendToConsoleWith(LogPrefix.MESSAGE);
       }
    }
 }

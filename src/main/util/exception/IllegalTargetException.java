@@ -1,6 +1,6 @@
 package main.util.exception;
 
-import main.util.ErrorMessages;
+import main.util.Messages;
 
 public class IllegalTargetException extends Exception {
 
@@ -9,7 +9,7 @@ public class IllegalTargetException extends Exception {
     * cannot be executed against it.
     */
    public IllegalTargetException() {
-      super(ErrorMessages.CANNOT_TARGET_BOT);
+      super(Messages.ERROR_CANNOT_TARGET_BOT);
    }
 
 }

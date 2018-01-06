@@ -7,6 +7,7 @@ import main.conf.ConfigHandler;
 import main.core.Executor;
 import main.core.commands.AccessManager;
 import main.server.ServerConnectionManager;
+import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.enums.AccessLevel;
 import main.util.exception.AuthorizationException;
@@ -53,17 +54,17 @@ public class PingCommand {
       final String RETURN_TEXT = "Pong!";
 
       if (event == null) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith("COMMAND RESPONSE");
+         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
          return;
       }
 
       TextMessageTargetMode mode = event.getTargetMode();
       if (mode == TextMessageTargetMode.SERVER) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith("COMMAND RESPONSE").sendToServer();
+         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE).sendToServer();
       } else if (mode == TextMessageTargetMode.CHANNEL) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith("COMMAND RESPONSE").sendToChannel();
+         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE).sendToChannel();
       } else if (mode == TextMessageTargetMode.CLIENT) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith("COMMAND RESPONSE").returnToSender(event);
+         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE).returnToSender(event);
       }
    }
 }
