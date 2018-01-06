@@ -11,6 +11,6 @@ public class ArgumentMissingException extends Exception {
     * @param argument the missing required argument.
     */
    public ArgumentMissingException(String command, String argument) {
-      super(String.format(Messages.MISSING_ARGUMENT, command, argument));
+      super(String.format(Messages.ERROR_MISSING_ARGUMENT, command, argument));
    }
 }

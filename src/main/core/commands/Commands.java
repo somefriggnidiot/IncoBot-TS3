@@ -79,8 +79,8 @@ public class Commands {
    }
 
    private static void validate(final String input) {
-      checkArgument(!StringUtils.isBlank(input), Messages.INPUT_BLANK);
+      checkArgument(!StringUtils.isBlank(input), Messages.ERROR_INPUT_BLANK);
       checkArgument(input.startsWith(prefix),
-          String.format(Messages.COMMAND_PREFIX_NOT_RECOGNIZED, input.substring(0, 1)));
+          String.format(Messages.ERROR_COMMAND_PREFIX_NOT_RECOGNIZED, input.substring(0, 1)));
    }
 }

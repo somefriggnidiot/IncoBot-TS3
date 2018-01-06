@@ -10,6 +10,6 @@ public class InvalidUserIdException extends Exception {
     * @param id the ID being targeted.
     */
    public InvalidUserIdException(String id) {
-      super(String.format(Messages.NO_USER_WITH_ID, id));
+      super(String.format(Messages.ERROR_NO_USER_WITH_ID, id));
    }
 }

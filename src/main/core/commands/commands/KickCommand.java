@@ -90,7 +90,7 @@ public class KickCommand {
          if (e.getCause().getMessage().contains("invalid clientID")) {
             throw new InvalidUserIdException(String.valueOf(target));
          } else {
-            new MessageHandler(Messages.UNKNOWN_ERROR)
+            new MessageHandler(Messages.ERROR_UNKNOWN_ERROR)
                 .sendToConsoleWith(Level.WARNING)
                 .sendToUser(event.getInvokerId());
          }

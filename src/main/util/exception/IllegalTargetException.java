@@ -9,7 +9,7 @@ public class IllegalTargetException extends Exception {
     * cannot be executed against it.
     */
    public IllegalTargetException() {
-      super(Messages.CANNOT_TARGET_BOT);
+      super(Messages.ERROR_CANNOT_TARGET_BOT);
    }
 
 }
