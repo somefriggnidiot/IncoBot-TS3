@@ -155,6 +155,7 @@ public class ServerConnectionManager {
     *
     * @param api the {@code TS3Appi} to be receiving the listeners.
     */
+   @Deprecated
    private void addListeners(final TS3Api api) {
       api.addTS3Listeners(new TS3EventAdapter() {
          @Override

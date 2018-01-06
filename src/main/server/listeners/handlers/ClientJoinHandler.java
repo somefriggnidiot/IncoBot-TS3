@@ -15,6 +15,9 @@ import java.net.URLEncoder;
 import java.util.List;
 import main.core.Config;
 import main.core.Executor;
+import main.util.ErrorMessages;
+import main.util.LogPrefix;
+import main.util.MessageHandler;
 import main.util.Util;
 
 /**
@@ -82,12 +85,13 @@ public class ClientJoinHandler {
    private void logToConsole() {
       final String channelName = api.getChannelInfo(event.getClientTargetId()).getName();
 
-      String logMessage = Util.timeStamp() + "[CONNECTION] "
-          + event.getClientNickname()
-          + " (" + event.getUniqueClientIdentifier() + ") "
-          + "connected to \"" + channelName + "\"";
-
-      System.out.println(logMessage);
+      new MessageHandler(
+          String.format(
+              ErrorMessages.USER_CONNECTED,
+              event.getClientNickname(),
+              event.getUniqueClientIdentifier(),
+              channelName))
+          .sendToConsoleWith(LogPrefix.CONNECTION);
    }
 
    /**

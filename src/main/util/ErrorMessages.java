@@ -19,4 +19,5 @@ public class ErrorMessages {
    public final static String NO_USER_WITH_ID = "No user is currently connected using id: %s";
    public final static String UNKNOWN_ERROR = "Somewhere, something broke. Contact someone who "
        + "knows what they're doing.";
+   public final static String USER_CONNECTED = "%s (%s) connected to \"%s\".";
 }
