@@ -24,7 +24,7 @@ import main.util.Util;
  */
 public class ServerConnectionManager {
 
-   ConnectionConfiguration connectionConfig = ConfigHandler.readConfig(
+   ConnectionConfiguration connectionConfig = ConfigHandler.readConnectionConfig(
        new File("./config/ConnectionConfig.yaml"));
    private TS3Query serverQuery;
    private TS3Config config;

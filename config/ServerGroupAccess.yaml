@@ -1,0 +1,37 @@
+# ==============================================
+# ====             Instructions             ====
+# ==============================================
+# = Add groups by their ID number. Each group  =
+# = should be on a new line, prefixed with     =
+# = a hyphen (-).                              =
+# ==============================================
+
+# This group has access to all functions, and
+#   cannot be removed from its role except by
+#   removing them directly from the config file.
+owner-groups:
+- 6
+
+# This group has access to all function, and
+#   can modify the roles of all non-owner users.
+super-admin-groups:
+
+# This group has access to all functionality
+#   except for that involved in role and config
+#   management.
+admin-groups:
+
+# This group has access to limited versions of
+#   disciplinary functionality.
+moderator-groups:
+
+# This group has access only to non-functional
+#   (cosmetic) commands.
+sponsor-groups:
+
+# This group cannot access any functionality of
+#   this program.
+blacklisted-groups:
+- 8
+- 10
+- 11

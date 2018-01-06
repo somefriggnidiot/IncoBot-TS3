@@ -8,15 +8,45 @@ Syntax notes:
 - Parameters with [brackets] are required. Parameters with (parentheses) are optional.
 - Do not include the brackets or parentheses when calling the command.
 
+## Passive Administration
+### Access Control Lists
+Grant clients the ability to use certain levels of commands, or prevent them from using commands 
+altogether by adding them to a controlled server group. Groups can be used as an access group by 
+adding the group ID to the ServerGroupAccessConfiguration.yaml file.
+
+Example Configuration for Groups:
+```yaml
+owner-groups:
+- 10101
+
+super-admin-groups:
+
+admin-groups:
+- 10102
+- 10103
+
+moderator-groups:
+
+sponsor-groups:
+- 10110
+
+blacklisted-groups:
+- 10104
+- 10105
+- 10106
+```
+
 ## Active Administration
 ### Kick
 Dual-side support for forced disconnects of connected clients.  
+**Minimum Permission Level:** Moderator  
 **Syntax:** !kick [clientId] [reason]  
 **Use:** Kicks the client matching the clientId from the server with the provided reason.
 
 ## Communication Abilities
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
+**Minimum Permission Level:** Default  
 **Syntax:** !ping  
 **Use:** Elicits a basic response ("Pong!") from the bot to function as a basic health check or open a line of communication with the query.  
 

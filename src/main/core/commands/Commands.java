@@ -6,6 +6,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.core.commands.commands.KickCommand;
 import main.core.commands.commands.PingCommand;
 import main.util.ErrorMessages;
+import main.util.exception.AuthorizationException;
 import main.util.exception.CommandNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -47,8 +48,11 @@ public class Commands {
     *
     * @param event the contents of the message being checked.
     * @throws CommandNotFoundException if the command being referenced is not known.
+    * @throws AuthorizationException if the invoking user does not have clearance to use the command
+    * being referenced.
     */
-   public static void handle(TextMessageEvent event) throws CommandNotFoundException {
+   public static void handle(TextMessageEvent event)
+       throws CommandNotFoundException, AuthorizationException {
       validate(event.getMessage());
       String input = event.getMessage();
 
