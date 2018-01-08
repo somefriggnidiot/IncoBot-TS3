@@ -10,14 +10,19 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.reconnect.ConnectionHandler;
 import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
+import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import main.conf.ConfigHandler;
 import main.conf.ConnectionConfiguration;
 import main.server.listeners.ClientConnectListener;
+import main.server.listeners.ClientDisconnectListener;
 import main.server.listeners.TextMessageListener;
 import main.util.MessageHandler;
 import main.util.Util;
+import main.util.exception.ClientNotFoundException;
 
 /**
  * {@code ServerConnectionManagers} controls basic server connection configuration and actions.
@@ -32,6 +37,7 @@ public class ServerConnectionManager {
    private TS3Api api;
    private TS3ApiAsync apiAsync;
    private Integer botClientId;
+   private HashMap<Integer, ClientInfo> connectedUserList = new HashMap<>();
 
    /**
     * Creates a basic SCM with default parameters.
@@ -41,7 +47,7 @@ public class ServerConnectionManager {
           .withHost(connectionConfig.getServerAddress())
           .withQueryPort(connectionConfig.getServerQueryPort())
           .withDebugLevel(Level.OFF)
-          .withFloodRate(FloodRate.UNLIMITED)
+          .withFloodRate(FloodRate.DEFAULT)
           .withReconnectStrategy(ReconnectStrategy.exponentialBackoff())
           .withConnectionHandler(new ConnectionHandler() {
              public void onConnect(TS3Query ts3Query) {
@@ -52,9 +58,12 @@ public class ServerConnectionManager {
                 api.setNickname(connectionConfig.getBotNickname());
                 api.registerAllEvents();
                 botClientId = api.whoAmI().getId();
+
+                compileOnlineUserList(api);
              }
 
              public void onDisconnect(TS3Query ts3Query) {
+                return;
              }
           })
           .build();
@@ -75,15 +84,15 @@ public class ServerConnectionManager {
             apiAsync = serverQuery.getAsyncApi();
             api = serverQuery.getApi();
 
-            addListeners(serverQuery.getApi());
             api.addTS3Listeners(new TextMessageListener());
             api.addTS3Listeners(new ClientConnectListener());
+            api.addTS3Listeners(new ClientDisconnectListener());
 
             //TODO: Remove; added for testing.
-            new MessageHandler("Blah!").sendToServer();
-            for (Client client : api.getClients()) {
-               new MessageHandler("I'm alive!").sendToUser(client.getId());
-            }
+//            new MessageHandler("Blah!").sendToServer();
+//            for (Client client : api.getClients()) {
+//               new MessageHandler("I'm alive!").sendToUser(client.getId());
+//            }
 
             new MessageHandler("Connected!").sendToConsoleWith(Level.INFO);
          }
@@ -150,20 +159,33 @@ public class ServerConnectionManager {
       return botClientId;
    }
 
-   /**
-    * Adds listeners and their handlers to the provided {@link TS3Api}.
-    *
-    * @param api the {@code TS3Appi} to be receiving the listeners.
-    */
-   @Deprecated
-   private void addListeners(final TS3Api api) {
-      api.addTS3Listeners(new TS3EventAdapter() {
-         @Override
-         public void onTextMessage(TextMessageEvent messageEvent) {
-            new MessageHandler(String.format("[MESSAGE - SERVER] %s -- %s", messageEvent
-                .getInvokerName(), messageEvent.getMessage()));
-         }
-      });
+   public void addConnectedClient(int clientId, ClientInfo clientInfo) {
+      if (!connectedUserList.containsKey(clientId) || clientId == -1) {
+         connectedUserList.put(clientId, clientInfo);
+      } else {
+         //TODO throw ClientAlreadyConnectedException
+      }
    }
 
+   public ClientInfo removeConnectedClient(int clientId) throws ClientNotFoundException {
+         ClientInfo clientInfo = connectedUserList.remove(clientId);
+
+         return clientInfo.getId() == -1 ? null : clientInfo;
+   }
+
+   //DEBUG ONLY
+   private void printUserList() {
+      for (ClientInfo client : connectedUserList.values()) {
+         System.out.println(client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
+      }
+   }
+
+   private void compileOnlineUserList(TS3Api api) {
+      List<Client> clients = api.getClients();
+
+      for(Client client : clients) {
+         final int id = client.getId();
+         addConnectedClient(id, api.getClientInfo(id));
+      }
+   }
 }

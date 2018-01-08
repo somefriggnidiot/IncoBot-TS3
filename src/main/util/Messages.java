@@ -8,6 +8,8 @@ public class Messages {
        + "have permissions to use command '%s'";
    public final static String ERROR_CANNOT_TARGET_BOT = "You cannot target the bot with that "
        + "command.";
+   public final static String ERROR_CLIENT_NOT_FOUND_WITH_ID = "No client could be found for id: "
+       + "%s";
    public final static String ERROR_COMMAND_NOT_FOUND = "%s is not a supported command.";
    public final static String ERROR_COMMAND_PREFIX_NOT_RECOGNIZED = "'%s' is not a recognized command"
        + " prefix!";
@@ -19,5 +21,12 @@ public class Messages {
    public final static String ERROR_NO_USER_WITH_ID = "No user is currently connected using id: %s";
    public final static String ERROR_UNKNOWN_ERROR = "Somewhere, something broke. Contact someone who "
        + "knows what they're doing.";
+   public final static String USER_BANNED = "%s (%s) was banned from the server by %s (%s) for %s"
+       + " for reason: %s";
    public final static String USER_CONNECTED = "%s (%s) connected to \"%s\".";
+   public final static String USER_DISCONNECTED = "%s (%s) disconnected from the server with "
+       + "reason: %s";
+   public final static String USER_KICKED = "%s (%s) was kicked from the server by %s (%s) for "
+       + "reason: %s";
+   public final static String USER_LOST_CONNECTION = "%s (%s) lost connection to the server.";
 }
