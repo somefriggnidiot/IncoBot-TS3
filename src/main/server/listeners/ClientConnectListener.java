@@ -8,6 +8,7 @@ import main.server.listeners.handlers.ClientJoinHandler;
  * Custom implementation of {@link ClientJoinEvent}.
  */
 public class ClientConnectListener extends TS3EventAdapter {
+
    private boolean consoleLoggingOn = false;
    private boolean fileLoggingOn = false;
 

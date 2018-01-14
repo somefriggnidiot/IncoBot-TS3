@@ -1,7 +1,9 @@
 package main.core.commands;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class AccessManagerTest {
       am.checkAccess(AccessLevel.DEFAULT);
    }
 
-   @Test (expected = AuthorizationException.class)
+   @Test(expected = AuthorizationException.class)
    public void checkAccessThrowsExceptionOnFailure() throws AuthorizationException {
       AccessManager am = new AccessManager(new ConfigHandler(), AccessLevel.MODERATOR);
       am.checkAccess(AccessLevel.DEFAULT);

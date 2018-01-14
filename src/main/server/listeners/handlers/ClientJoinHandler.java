@@ -8,33 +8,41 @@ import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
 import main.core.Config;
 import main.core.Executor;
-import main.util.Messages;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
+import main.util.Messages;
 import main.util.Util;
 
 /**
  * Logic and helper functions used to handle the firing of a {@link ClientConnectListener}
  */
 public class ClientJoinHandler {
-   final TS3Api api = Executor.getServer("testInstance").getApi();
-   ClientJoinEvent event;
-   Client client;
-   ClientInfo clientInfo;
-   List<ServerGroup> serverGroups;
+
+   private final TS3Api api = Executor.getServer("testInstance").getApi();
+   private ClientJoinEvent event;
+   private Client client;
+   private ClientInfo clientInfo;
+   private List<ServerGroup> serverGroups;
 
    public ClientJoinHandler(ClientJoinEvent event, boolean consoleLogging, boolean fileLogging) {
       this.event = event;
       this.client = api.getClientByUId(event.getUniqueClientIdentifier());
       this.clientInfo = api.getClientInfo(client.getId());
       this.serverGroups = api.getServerGroupsByClient(client);
+
+      if (event.getUniqueClientIdentifier().contains("Query")) {
+         Executor.getServer("testInstance")
+             .addConnectedClient(client.getId(), new ClientInfo(-1, null));
+         return;
+      } else {
+         Executor.getServer("testInstance").addConnectedClient(event.getClientId(), clientInfo);
+      }
 
       if (consoleLogging) {
          logToConsole();
@@ -72,8 +80,6 @@ public class ClientJoinHandler {
          br.close();
 
          assignGroups(userGroup);
-      } catch (MalformedURLException e) {
-         e.printStackTrace();
       } catch (IOException e) {
          e.printStackTrace();
       }
@@ -85,13 +91,8 @@ public class ClientJoinHandler {
    private void logToConsole() {
       final String channelName = api.getChannelInfo(event.getClientTargetId()).getName();
 
-      new MessageHandler(
-          String.format(
-              Messages.USER_CONNECTED,
-              event.getClientNickname(),
-              event.getUniqueClientIdentifier(),
-              channelName))
-          .sendToConsoleWith(LogPrefix.CONNECTION);
+      new MessageHandler(String.format(Messages.USER_CONNECTED, event.getClientNickname(),
+          event.getUniqueClientIdentifier(), channelName)).sendToConsoleWith(LogPrefix.CONNECTION);
    }
 
    /**
@@ -100,7 +101,7 @@ public class ClientJoinHandler {
     * @param userGroup the usergroup being used to determine ServerGroups.
     */
    private void assignGroups(String userGroup) {
-      if (userGroup != "") {  //Check for empty.
+      if (!userGroup.isEmpty()) {  //Check for empty.
          if (userGroup.startsWith("registered")) { //For users who default to Registered.
             /*    ASSIGN TO
              *       registeredGroupId

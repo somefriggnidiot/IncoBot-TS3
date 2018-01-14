@@ -16,6 +16,7 @@ import main.util.exception.AuthorizationException;
  * Command used to do a basic health-check of the application.
  */
 public class PingCommand {
+
    private TextMessageEvent event;
 
    /**
@@ -29,8 +30,8 @@ public class PingCommand {
     * Create a PingCommand instance to handle client executions.
     *
     * @param event the {@link TextMessageEvent} that triggered the PingCommand.
-    * @throws AuthorizationException if the invoker of this command does not have authorization
-    * to execute it.
+    * @throws AuthorizationException if the invoker of this command does not have authorization to
+    * execute it.
     */
    public PingCommand(TextMessageEvent event) throws AuthorizationException {
       this.event = event;
@@ -60,11 +61,14 @@ public class PingCommand {
 
       TextMessageTargetMode mode = event.getTargetMode();
       if (mode == TextMessageTargetMode.SERVER) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE).sendToServer();
+         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+             .sendToServer();
       } else if (mode == TextMessageTargetMode.CHANNEL) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE).sendToChannel();
+         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+             .sendToChannel();
       } else if (mode == TextMessageTargetMode.CLIENT) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE).returnToSender(event);
+         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+             .returnToSender(event);
       }
    }
 }

@@ -31,6 +31,9 @@ public class KickCommand {
     * @param input the string read in from the console that triggered this command.
     */
    public KickCommand(String input) {
+      this.instance = Executor.getServer("testInstance");
+      this.api = instance.getApiAsync();
+
       try {
          handle(input);
       } catch (ArgumentMissingException | IllegalTargetException | InvalidUserIdException e) {
@@ -42,8 +45,8 @@ public class KickCommand {
     * Create a KickCommand instance to handle client execution.
     *
     * @param event the {@link TextMessageEvent} containing the call for this command.
-    * @throws AuthorizationException if the invoker of this command does not have authorization
-    * to execute it.
+    * @throws AuthorizationException if the invoker of this command does not have authorization to
+    * execute it.
     */
    public KickCommand(TextMessageEvent event) throws AuthorizationException {
       this.event = event;

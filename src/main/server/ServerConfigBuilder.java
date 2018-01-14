@@ -28,8 +28,8 @@ public class ServerConfigBuilder {
    }
 
    /**
-    * Specifies a host value for the {@link TS3Config}. This value is used to connect to a
-    * physical server.
+    * Specifies a host value for the {@link TS3Config}. This value is used to connect to a physical
+    * server.
     *
     * @param host the IP address or URL of the physical server
     * @return {@link ServerConfigBuilder} with this host value.
