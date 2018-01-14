@@ -21,6 +21,8 @@ public class Messages {
    public final static String ERROR_NO_USER_WITH_ID = "No user is currently connected using id: %s";
    public final static String ERROR_UNKNOWN_ERROR = "Somewhere, something broke. Contact someone who "
        + "knows what they're doing.";
+   public final static String SUCCESSFULLY_CONNECTED = "Successfully connected to \"%s\" as "
+       + "\"%s\"!";
    public final static String USER_BANNED = "%s (%s) was banned from the server by %s (%s) for %s"
        + " for reason: %s";
    public final static String USER_CONNECTED = "%s (%s) connected to \"%s\".";

@@ -3,6 +3,7 @@ package main.core.commands;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import main.core.Executor;
 import main.core.commands.commands.KickCommand;
 import main.core.commands.commands.PingCommand;
 import main.util.Messages;
@@ -37,6 +38,9 @@ public class Commands {
             new PingCommand();
             return;
          case "forcequit":
+            return;
+         case "printusers":
+            Executor.getServer("testInstance").printUserList();
             return;
          default:
             throw (new CommandNotFoundException(command[0]));

@@ -50,10 +50,10 @@ public class Executor implements Runnable {
        *
        */
       Boolean exit = false;
-      int fiveMinuteTimer = 600;
+      int fiveMinuteTimer = 600 * 6;
       do {
          Thread.sleep(500);
-         if (fiveMinuteTimer++ == 600) {
+         if (fiveMinuteTimer++ == (600*6)) {
             fiveMinuteTimer = 0;
             new MessageHandler("System Running").sendToConsoleWith(Level.INFO);
          }

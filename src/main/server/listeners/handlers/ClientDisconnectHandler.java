@@ -1,7 +1,6 @@
 package main.server.listeners.handlers;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
-import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.ClientLeaveEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import java.util.logging.Level;
@@ -13,7 +12,6 @@ import main.util.exception.ClientNotFoundException;
 
 public class ClientDisconnectHandler {
 
-   private final TS3Api api = Executor.getServer("testInstance").getApi();
    private ClientLeaveEvent event;
    private ClientInfo clientInfo;
 
@@ -36,12 +34,13 @@ public class ClientDisconnectHandler {
 
    private void logToFile() {
       //TODO Auto-generated method stub
-      return;
    }
 
    private void logToConsole() {
-      if (clientInfo == null) { return; }
-      String message = "A user disconnected using an unrecognized method.";
+      if (clientInfo == null) {
+         return;
+      }
+      String message;
       String victimName = clientInfo.getNickname();
       String victimUid = clientInfo.getUniqueIdentifier();
       String invokerName = event.getInvokerName();
@@ -57,7 +56,7 @@ public class ClientDisconnectHandler {
          message = String
              .format(Messages.USER_BANNED, victimName, victimUid, invokerName, invokerUid,
                  getBanLengthFormatted(event.get("bantime")), reason);
-      } else if (event.getReasonId() == 8) {
+      } else {
          message = String.format(Messages.USER_DISCONNECTED, victimName, victimUid, reason);
       }
 
@@ -66,17 +65,12 @@ public class ClientDisconnectHandler {
 
    private String getBanLengthFormatted(String banLength) {
       final Integer banLengthValue = Integer.parseInt(banLength);
-      Integer banLegnthDays = banLengthValue / 86400;
+      Integer banLengthDays = banLengthValue / 86400;
       Integer banLengthHours = (banLengthValue % 86400) / 3600;
       Integer banLengthMinutes = (banLengthValue % 3600) / 60;
       Integer banLengthSeconds = banLengthValue % 60;
 
-      String formatted = String.format("%s Days %s Hours %s Minutes %s Seconds", banLegnthDays
-              .toString(),
+      return String.format("%s Days %s Hours %s Minutes %s Seconds", banLengthDays.toString(),
           banLengthHours.toString(), banLengthMinutes.toString(), banLengthSeconds.toString());
-
-      formatted = formatted;
-
-      return formatted;
    }
 }

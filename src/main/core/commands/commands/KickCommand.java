@@ -31,6 +31,9 @@ public class KickCommand {
     * @param input the string read in from the console that triggered this command.
     */
    public KickCommand(String input) {
+      this.instance = Executor.getServer("testInstance");
+      this.api = instance.getApiAsync();
+
       try {
          handle(input);
       } catch (ArgumentMissingException | IllegalTargetException | InvalidUserIdException e) {

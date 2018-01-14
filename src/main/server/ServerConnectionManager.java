@@ -5,8 +5,6 @@ import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
-import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
-import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.reconnect.ConnectionHandler;
 import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
@@ -21,7 +19,7 @@ import main.server.listeners.ClientConnectListener;
 import main.server.listeners.ClientDisconnectListener;
 import main.server.listeners.TextMessageListener;
 import main.util.MessageHandler;
-import main.util.Util;
+import main.util.Messages;
 import main.util.exception.ClientNotFoundException;
 
 /**
@@ -29,7 +27,7 @@ import main.util.exception.ClientNotFoundException;
  */
 public class ServerConnectionManager {
 
-   ConnectionConfiguration connectionConfig = ConfigHandler.readConnectionConfig(
+   private ConnectionConfiguration connectionConfig = ConfigHandler.readConnectionConfig(
        new File("./config/ConnectionConfig.yaml"));
    private TS3Query serverQuery;
    private TS3Config config;
@@ -63,7 +61,6 @@ public class ServerConnectionManager {
              }
 
              public void onDisconnect(TS3Query ts3Query) {
-                return;
              }
           })
           .build();
@@ -94,7 +91,8 @@ public class ServerConnectionManager {
 //               new MessageHandler("I'm alive!").sendToUser(client.getId());
 //            }
 
-            new MessageHandler("Connected!").sendToConsoleWith(Level.INFO);
+            new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
+                .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
          }
       });
    }
@@ -168,22 +166,23 @@ public class ServerConnectionManager {
    }
 
    public ClientInfo removeConnectedClient(int clientId) throws ClientNotFoundException {
-         ClientInfo clientInfo = connectedUserList.remove(clientId);
+      ClientInfo clientInfo = connectedUserList.remove(clientId);
 
-         return clientInfo.getId() == -1 ? null : clientInfo;
+      return clientInfo.getId() == -1 ? null : clientInfo;
    }
 
    //DEBUG ONLY
-   private void printUserList() {
+   public void printUserList() {
       for (ClientInfo client : connectedUserList.values()) {
-         System.out.println(client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
+         System.out.println(
+             client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
       }
    }
 
    private void compileOnlineUserList(TS3Api api) {
       List<Client> clients = api.getClients();
 
-      for(Client client : clients) {
+      for (Client client : clients) {
          final int id = client.getId();
          addConnectedClient(id, api.getClientInfo(id));
       }
