@@ -10,7 +10,6 @@ import main.server.ServerConnectionManager;
 import main.util.Messages;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
-import main.util.Messages;
 import main.util.enums.AccessLevel;
 import main.util.exception.ArgumentMissingException;
 import main.util.exception.AuthorizationException;
