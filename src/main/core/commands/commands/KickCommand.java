@@ -7,6 +7,7 @@ import main.conf.ConfigHandler;
 import main.core.Executor;
 import main.core.commands.AccessManager;
 import main.server.ServerConnectionManager;
+import main.util.Messages;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.Messages;
