@@ -39,7 +39,7 @@ public class Commands {
             return;
          case "forcequit":
             return;
-         case "printusers":
+         case "debug::printusers":
             Executor.getServer("testInstance").printUserList();
             return;
          default:

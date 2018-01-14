@@ -169,6 +169,12 @@ public class ServerConnectionManager {
       return clientInfo.getId() == -1 ? null : clientInfo;
    }
 
+   public void printUserList() { //TODO Refactor to be viable
+      for (ClientInfo client : connectedUserList.values()) {
+         System.out.println(client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
+      }
+   }
+
    private void compileOnlineUserList(TS3Api api) {
       List<Client> clients = api.getClients();
 
