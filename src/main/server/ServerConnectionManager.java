@@ -169,7 +169,7 @@ public class ServerConnectionManager {
       return clientInfo.getId() == -1 ? null : clientInfo;
    }
 
-   public void printUserList() { //TODO Refactor to be viable
+   public void printUserList() { //TODO Refactor to be viable, likely as part of clientinfo command.
       for (ClientInfo client : connectedUserList.values()) {
          System.out.println(client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
       }
