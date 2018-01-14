@@ -160,8 +160,6 @@ public class ServerConnectionManager {
    public void addConnectedClient(int clientId, ClientInfo clientInfo) {
       if (!connectedUserList.containsKey(clientId) || clientId == -1) {
          connectedUserList.put(clientId, clientInfo);
-      } else {
-         //TODO throw ClientAlreadyConnectedException
       }
    }
 
@@ -169,14 +167,6 @@ public class ServerConnectionManager {
       ClientInfo clientInfo = connectedUserList.remove(clientId);
 
       return clientInfo.getId() == -1 ? null : clientInfo;
-   }
-
-   //DEBUG ONLY
-   public void printUserList() {
-      for (ClientInfo client : connectedUserList.values()) {
-         System.out.println(
-             client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
-      }
    }
 
    private void compileOnlineUserList(TS3Api api) {

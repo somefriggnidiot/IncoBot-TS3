@@ -13,6 +13,7 @@ import main.util.MessageHandler;
  * Logic and helper functions used to handle the firing of a {@link TextMessageListener}
  */
 public class TextMessageHandler {
+
    private final Integer botId = Executor.getServer("testInstance").getBotId();
    private TextMessageEvent event;
    private String message;

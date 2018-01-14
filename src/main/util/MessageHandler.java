@@ -1,6 +1,5 @@
 package main.util;
 
-import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import java.util.logging.Level;
@@ -11,6 +10,7 @@ import main.core.Executor;
  * Contains utility methods to format and send messages to various outputs.
  */
 public class MessageHandler {
+
    private static Level configDebugLevel = Configuration.getLoggingLevel();
    private String message;
 

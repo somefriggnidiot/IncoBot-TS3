@@ -14,6 +14,7 @@ import main.util.exception.CommandNotFoundException;
  * Main class of the SFITS3 bot program.
  */
 public class Executor implements Runnable {
+
    private final static Map<String, ServerConnectionManager> instances = new HashMap<>();
    static BufferedReader in;
    static Boolean quit = false;
@@ -53,7 +54,7 @@ public class Executor implements Runnable {
       int fiveMinuteTimer = 600 * 6;
       do {
          Thread.sleep(500);
-         if (fiveMinuteTimer++ == (600*6)) {
+         if (fiveMinuteTimer++ == (600 * 6)) {
             fiveMinuteTimer = 0;
             new MessageHandler("System Running").sendToConsoleWith(Level.INFO);
          }

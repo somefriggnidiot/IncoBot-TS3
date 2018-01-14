@@ -4,23 +4,29 @@ package main.util;
  * Generic error messages to be used across the application.
  */
 public class Messages {
-   public final static String ERROR_ACCESS_LIST_CANNOT_USE_COMMAND = "The '%s' access list does not "
-       + "have permissions to use command '%s'";
+
+   public final static String ERROR_ACCESS_LIST_CANNOT_USE_COMMAND =
+       "The '%s' access list does not "
+           + "have permissions to use command '%s'";
    public final static String ERROR_CANNOT_TARGET_BOT = "You cannot target the bot with that "
        + "command.";
    public final static String ERROR_CLIENT_NOT_FOUND_WITH_ID = "No client could be found for id: "
        + "%s";
    public final static String ERROR_COMMAND_NOT_FOUND = "%s is not a supported command.";
-   public final static String ERROR_COMMAND_PREFIX_NOT_RECOGNIZED = "'%s' is not a recognized command"
-       + " prefix!";
-   public final static String ERROR_INPUT_BLANK = "Space may be the final frontier, but sending me spaces"
-       + " does nothing!";
-   public final static String ERROR_LEVEL_LOWER_THAN_REQUIRED = "The provided access level of %s is "
-       + "lower than the required access level of %s.";
+   public final static String ERROR_COMMAND_PREFIX_NOT_RECOGNIZED =
+       "'%s' is not a recognized command"
+           + " prefix!";
+   public final static String ERROR_INPUT_BLANK =
+       "Space may be the final frontier, but sending me spaces"
+           + " does nothing!";
+   public final static String ERROR_LEVEL_LOWER_THAN_REQUIRED =
+       "The provided access level of %s is "
+           + "lower than the required access level of %s.";
    public final static String ERROR_MISSING_ARGUMENT = "Command '%s' requires argument '%s'.";
    public final static String ERROR_NO_USER_WITH_ID = "No user is currently connected using id: %s";
-   public final static String ERROR_UNKNOWN_ERROR = "Somewhere, something broke. Contact someone who "
-       + "knows what they're doing.";
+   public final static String ERROR_UNKNOWN_ERROR =
+       "Somewhere, something broke. Contact someone who "
+           + "knows what they're doing.";
    public final static String SUCCESSFULLY_CONNECTED = "Successfully connected to \"%s\" as "
        + "\"%s\"!";
    public final static String USER_BANNED = "%s (%s) was banned from the server by %s (%s) for %s"

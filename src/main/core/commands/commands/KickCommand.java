@@ -7,9 +7,9 @@ import main.conf.ConfigHandler;
 import main.core.Executor;
 import main.core.commands.AccessManager;
 import main.server.ServerConnectionManager;
-import main.util.Messages;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
+import main.util.Messages;
 import main.util.enums.AccessLevel;
 import main.util.exception.ArgumentMissingException;
 import main.util.exception.AuthorizationException;
@@ -45,8 +45,8 @@ public class KickCommand {
     * Create a KickCommand instance to handle client execution.
     *
     * @param event the {@link TextMessageEvent} containing the call for this command.
-    * @throws AuthorizationException if the invoker of this command does not have authorization
-    * to execute it.
+    * @throws AuthorizationException if the invoker of this command does not have authorization to
+    * execute it.
     */
    public KickCommand(TextMessageEvent event) throws AuthorizationException {
       this.event = event;

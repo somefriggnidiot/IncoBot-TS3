@@ -5,6 +5,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import main.server.listeners.handlers.ClientDisconnectHandler;
 
 public class ClientDisconnectListener extends TS3EventAdapter {
+
    private boolean consoleLoggingOn = false;
    private boolean fileLoggingOn = false;
 

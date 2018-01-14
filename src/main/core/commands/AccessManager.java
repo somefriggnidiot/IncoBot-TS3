@@ -11,6 +11,7 @@ import main.util.exception.AuthorizationException;
  * Utility class for handling access lists / permissions in commands.
  */
 public class AccessManager {
+
    private ServerGroupAccessConfiguration groupAccessConfig;
    private AccessLevel requiredLevel;
 

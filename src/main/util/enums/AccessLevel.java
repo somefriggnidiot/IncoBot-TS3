@@ -1,7 +1,5 @@
 package main.util.enums;
 
-import java.util.Comparator;
-
 public enum AccessLevel {
    OWNER(100),
    SUPER_ADMIN(90),
