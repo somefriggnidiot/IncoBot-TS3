@@ -49,16 +49,7 @@ Dual-side support for simple bot health-check by having it return a simple phras
 **Minimum Permission Level:** Default  
 **Syntax:** !ping  
 **Use:** Elicits a basic response ("Pong!") from the bot to function as a basic health check or open a line of communication with the query.  
-
-# Upcoming Features
-## Passive Administration
-
-## Active Administration
-### UserInfo
-Dual-side support for listing information pertaining to connected users.
-
-## Communication Abilities
-
+  
 # Long-Term Goals  
 ## Passive Administration
 ### Idle Check 
