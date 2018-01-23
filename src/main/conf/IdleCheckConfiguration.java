@@ -7,6 +7,7 @@ import java.util.List;
  * DTO for idle-checker configuration.
  */
 public class IdleCheckConfiguration {
+
    @JsonProperty("idle-max-time-minutes")
    private int maxTimeMinutes;
 

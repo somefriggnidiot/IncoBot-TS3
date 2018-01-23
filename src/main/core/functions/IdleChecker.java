@@ -61,14 +61,14 @@ public class IdleChecker extends TimerTask {
    }
 
    /**
-    * Compiles a list of clients that can be moved if idle. Clients are determined to be movable
-    * if they are not in one of the ignored groups, and they are not the this program.
+    * Compiles a list of clients that can be moved if idle. Clients are determined to be movable if
+    * they are not in one of the ignored groups, and they are not the this program.
     *
     * @param onlineClients a list of all clients online.
     * @return a list of all online, movable clients.
     */
    private List<Client> getApplicableClients(List<Client> onlineClients) {
-      int[] ignoredGroups = config.getIgnoreGroups();
+      List<Integer> ignoredGroups = config.getIgnoreGroups();
       List<Client> applicableClients = new ArrayList<>();
       Boolean ignore;
 

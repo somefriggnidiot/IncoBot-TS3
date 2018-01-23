@@ -17,6 +17,7 @@ import main.util.exception.AuthorizationException;
  * Command used to manage the {@link IdleChecker} functionality.
  */
 public class IdleCheckerCommand {
+
    private ServerConnectionManager instance;
    private TS3ApiAsync api;
 
