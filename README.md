@@ -74,7 +74,7 @@ Dual-side support for forced disconnects of connected clients.
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
 **Minimum Permission Level:** Default  
-**Syntax:** `!ping  `
+**Syntax:** `!ping`  
 **Use:** Elicits a basic response ("Pong!") from the bot to function as a basic health check or open a line of communication with the query.  
 
 # Upcoming Features
