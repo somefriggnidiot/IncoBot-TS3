@@ -1,0 +1,11 @@
+# ==============================================
+# ====        Idle Mover Information        ====
+# ==============================================
+# = Determines when and where to move idle     =
+# =   users within the server.                 =
+# ==============================================
+
+idle-max-time-minutes: 45
+idle-destination-channel: 105093
+idle-ignore-groups:
+ - 38113
