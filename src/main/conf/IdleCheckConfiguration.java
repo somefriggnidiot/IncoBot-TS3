@@ -1,6 +1,7 @@
 package main.conf;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,11 +10,9 @@ import java.util.List;
 public class IdleCheckConfiguration {
 
    @JsonProperty("idle-max-time-minutes")
-   private int maxTimeMinutes;
-
+   private Integer maxTimeMinutes;
    @JsonProperty("idle-destination-channel")
-   private int destinationChannel;
-
+   private Integer destinationChannel;
    @JsonProperty("idle-ignore-groups")
    private List<Integer> ignoreGroups;
 
@@ -21,7 +20,7 @@ public class IdleCheckConfiguration {
     * @return the maximum time in minutes a user may remain idle before being moved.
     */
    @JsonProperty("idle-max-time-minutes")
-   public int getMaxTimeMinutes() {
+   public Integer getMaxTimeMinutes() {
       return maxTimeMinutes;
    }
 
@@ -29,7 +28,7 @@ public class IdleCheckConfiguration {
     * @param maxTimeMinutes the maximum time in minutes a user may remain idle before being moved.
     */
    @JsonProperty("idle-max-time-minutes")
-   public void setMaxTimeMinutes(int maxTimeMinutes) {
+   public void setMaxTimeMinutes(Integer maxTimeMinutes) {
       this.maxTimeMinutes = maxTimeMinutes;
    }
 
@@ -37,7 +36,7 @@ public class IdleCheckConfiguration {
     * @return the ID of the channel idle users will be moved to.
     */
    @JsonProperty("idle-destination-channel")
-   public int getDestinationChannel() {
+   public Integer getDestinationChannel() {
       return destinationChannel;
    }
 
@@ -45,7 +44,7 @@ public class IdleCheckConfiguration {
     * @param destinationChannel the ID of the channel idle users will be moved to.
     */
    @JsonProperty("idle-destination-channel")
-   public void setDestinationChannel(int destinationChannel) {
+   public void setDestinationChannel(Integer destinationChannel) {
       this.destinationChannel = destinationChannel;
    }
 
@@ -62,7 +61,7 @@ public class IdleCheckConfiguration {
     */
    @JsonProperty("idle-ignore-groups")
    public void setIgnoreGroups(List<Integer> ignoreGroups) {
-      this.ignoreGroups = ignoreGroups;
+      this.ignoreGroups = new ArrayList<>(ignoreGroups);
    }
 
    /**
@@ -70,7 +69,7 @@ public class IdleCheckConfiguration {
     * checker.
     */
    @JsonProperty("idle-ignore-groups")
-   public void setIgnoreGroup(int ignoreGroup) {
+   public void addIgnoreGroup(Integer ignoreGroup) {
       if (!this.ignoreGroups.contains(ignoreGroup)) {
          ignoreGroups.add(ignoreGroup);
       }
@@ -81,7 +80,7 @@ public class IdleCheckConfiguration {
     * checker.
     */
    @JsonProperty("idle-ignore-groups")
-   public void removeIgnoreGroup(int ignoreGroup) {
+   public void removeIgnoreGroup(Integer ignoreGroup) {
       if (this.ignoreGroups.contains(ignoreGroup)) {
          ignoreGroups.remove(Integer.valueOf(ignoreGroup));
       }
