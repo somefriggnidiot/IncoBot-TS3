@@ -5,7 +5,10 @@ Interactive console application for TS3 server administration, featuring front-a
 # Current Features
 Syntax notes:
 - Any command with multiple syntaxes will allow any of those listed.
-- Parameters with [brackets] are required. Parameters with (parentheses) are optional.
+- Parameters with [brackets] are required, and can be any valid value.
+- Parameters with <angled_brackets> are required, and can only be one of the values denoted 
+within, separated by a pipe. Example: `<on | off>` 
+- Parameters with (parentheses) are optional.
 - Do not include the brackets or parentheses when calling the command.
 
 ## Passive Administration
@@ -35,19 +38,43 @@ blacklisted-groups:
 - 10105
 - 10106
 ```
+  
+### Idle Checker Configuration
+Establish a set time in minutes before idle users are automatically moved to a designated channel. Users can be exempt from the check by being added to one of the groups listed as an ignore 
+group in the IdleChecker.yaml file. IdleChecker must be restarted for config changes to take 
+effect if changes are made to the file while it is running.  
+For control information, see [Idle Checker](#idle-checker).
+
+Example Configuration for Idle Checker:
+```yaml
+idle-max-time-minutes: 60
+idle-destination-channel: 90210
+idle-ignore-groups:
+ - 10101
+ - 10102
+ - 10103
+```
 
 ## Active Administration
+### Idle Checker
+Dual-side support for controlling whether or not the bot will check for (and move) idle users.
+**Minimum Permission Level:** Admin  
+**Syntax:** `!idlechecker <enable | disable>`  
+**Use:** Enables or disables the IdleChecker functionality. When enabled, users will be moved to 
+the designated idle channel after a certain threshold of time.  
+For additional information, see [Idle Checker Configuration](#idle-checker-configuration).  
+  
 ### Kick
 Dual-side support for forced disconnects of connected clients.  
 **Minimum Permission Level:** Moderator  
-**Syntax:** !kick [clientId] [reason]  
-**Use:** Kicks the client matching the clientId from the server with the provided reason.
-
+**Syntax:** `!kick [clientId] [reason]`  
+**Use:** Kicks the client matching the clientId from the server with the provided reason.  
+  
 ## Communication Abilities
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
 **Minimum Permission Level:** Default  
-**Syntax:** !ping  
+**Syntax:** `!ping`  
 **Use:** Elicits a basic response ("Pong!") from the bot to function as a basic health check or open a line of communication with the query.  
   
 # Long-Term Goals  

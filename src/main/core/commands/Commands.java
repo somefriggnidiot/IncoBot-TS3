@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.core.Executor;
+import main.core.commands.commands.IdleCheckerCommand;
 import main.core.commands.commands.KickCommand;
 import main.core.commands.commands.PingCommand;
 import main.util.Messages;
@@ -31,6 +32,9 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
+         case "idlechecker":
+            new IdleCheckerCommand(input);
+            return;
          case "kick":
             new KickCommand(input);
             return;
@@ -38,6 +42,7 @@ public class Commands {
             new PingCommand();
             return;
          case "forcequit":
+            Executor.getServer("testInstance").disconnect();
             return;
          case "debug::printusers":
             Executor.getServer("testInstance").printUserList();
@@ -64,6 +69,9 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
+         case "idlechecker":
+            new IdleCheckerCommand(event);
+            return;
          case "kick":
             new KickCommand(event);
             return;

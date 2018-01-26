@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import main.core.commands.Commands;
 import main.server.ServerConnectionManager;
+import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.exception.CommandNotFoundException;
 
@@ -97,7 +98,7 @@ public class Executor implements Runnable {
             msg = in.readLine();
             Commands.handle(msg);
          } catch (IllegalArgumentException | CommandNotFoundException e) {
-            new MessageHandler(e.getMessage()).sendToConsoleWith(Level.INFO);
+            new MessageHandler(e.getMessage()).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
          } catch (Exception ex) {
             new MessageHandler(ex.getMessage()).sendToConsoleWith(Level.WARNING);
          }
