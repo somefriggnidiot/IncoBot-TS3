@@ -4,6 +4,9 @@ import com.github.theholywaffle.teamspeak3.api.event.ClientMovedEvent;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import main.server.listeners.handlers.ClientMovedHandler;
 
+/**
+ * Custom implementation of {@link ClientMovedEvent} listener.
+ */
 public class ClientMovedListener extends TS3EventAdapter {
 
    private boolean consoleLoggingOn = false;
