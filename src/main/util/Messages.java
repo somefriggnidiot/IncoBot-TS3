@@ -43,6 +43,8 @@ public class Messages {
    public final static String USER_KICKED = "%s (%s) was kicked from the server by %s (%s) for "
        + "reason: %s";
    public final static String USER_LOST_CONNECTION = "%s (%s) lost connection to the server.";
+   public final static String USER_MOVED = "%s (%s) moved to \"%s\".";
+   public final static String USER_WAS_MOVED = "%s (%s) moved %s (%s) to \"%s\".";
    public final static String YOU_HAVE_BEEN_MOVED = "You have been moved to \"%s\" for being idle"
        + " longer than %s minutes.";
 }

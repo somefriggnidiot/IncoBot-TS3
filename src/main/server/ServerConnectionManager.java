@@ -17,6 +17,7 @@ import main.conf.ConfigHandler;
 import main.conf.ConnectionConfiguration;
 import main.server.listeners.ClientConnectListener;
 import main.server.listeners.ClientDisconnectListener;
+import main.server.listeners.ClientMovedListener;
 import main.server.listeners.TextMessageListener;
 import main.util.MessageHandler;
 import main.util.Messages;
@@ -84,6 +85,7 @@ public class ServerConnectionManager {
             api.addTS3Listeners(new TextMessageListener());
             api.addTS3Listeners(new ClientConnectListener());
             api.addTS3Listeners(new ClientDisconnectListener());
+            api.addTS3Listeners(new ClientMovedListener());
 
             //TODO: Remove; added for testing.
 //            new MessageHandler("Blah!").sendToServer();
