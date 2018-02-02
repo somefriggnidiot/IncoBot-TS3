@@ -20,7 +20,7 @@ import main.util.Messages;
 import main.util.Util;
 
 /**
- * Logic and helper functions used to handle the firing of a {@link ClientConnectListener}
+ * Logic and helper functions used to handle the firing of a {@link ClientJoinEvent}.
  */
 public class ClientJoinHandler {
 
@@ -30,6 +30,14 @@ public class ClientJoinHandler {
    private ClientInfo clientInfo;
    private List<ServerGroup> serverGroups;
 
+   /**
+    * Creates a new {@link ClientJoinHandler} with the provided {@link ClientJoinEvent} and logging
+    * settings.
+    *
+    * @param event the {@code ClientJoinEvent} being acted upon.
+    * @param consoleLogging whether or not this event should be logged to the console.
+    * @param fileLogging whether or not this event should be logged to a file.
+    */
    public ClientJoinHandler(ClientJoinEvent event, boolean consoleLogging, boolean fileLogging) {
       this.event = event;
       this.client = api.getClientByUId(event.getUniqueClientIdentifier());
