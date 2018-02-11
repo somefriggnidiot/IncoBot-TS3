@@ -27,3 +27,4 @@ hs_err_pid*
 target/
 /conbot.iml
 /.idea/
+/incobot-ts3.iml
