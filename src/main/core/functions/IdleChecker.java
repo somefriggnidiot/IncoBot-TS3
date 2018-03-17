@@ -20,14 +20,56 @@ import main.util.Messages;
  */
 public class IdleChecker extends TimerTask {
 
+   private static IdleChecker idleChecker;
+   private static Timer idleCheckerTimer;
+   private static Boolean isActive = false;
    private IdleCheckConfiguration config = ConfigHandler.readIdleCheckConfig(
        new File("./config/IdleChecker.yaml"));
    private TS3ApiAsync api = Executor.getServer("testInstance").getApiAsync();
    private int maxIdleTimeMilliseconds = config.getMaxTimeMinutes() * 60000;
    private int botClientId = Executor.getServer("testInstance").getBotId();
 
-   private static IdleChecker idleChecker;
-   private static Timer idleCheckerTimer;
+   /**
+    * Begins execution of the Idle Checker loop.
+    */
+   public static String start() {
+      if (!isActive) {
+         String destinationChannelName;
+
+         idleChecker = new IdleChecker();
+         idleCheckerTimer = new Timer();
+
+         try {
+            destinationChannelName = idleChecker.api.getChannelInfo(idleChecker.config
+                .getDestinationChannel()).getUninterruptibly().getName();
+         } catch (Exception e) {
+            throw new NullPointerException(String
+                .format(Messages.CHANNEL_NOT_FOUND, idleChecker.config.getDestinationChannel()));
+         }
+
+         idleCheckerTimer.schedule(idleChecker, 0, 1000);
+         isActive = true;
+         return String.format(Messages.IDLE_CHECK_ENABLED, destinationChannelName, idleChecker
+             .config.getMaxTimeMinutes());
+      } else {
+         return String.format(Messages.IDLE_CHECK_CANNOT_COMPLETE_ACTION, "enabled");
+      }
+   }
+
+   /**
+    * Stops execution of the Idle Checker loop.
+    */
+   public static String stop() {
+      if (isActive) {
+         idleChecker.cancel();
+         idleCheckerTimer.cancel();
+         idleCheckerTimer.purge();
+         isActive = false;
+         return Messages.IDLE_CHECK_DISABLED;
+      } else {
+         return String.format(Messages.IDLE_CHECK_CANNOT_COMPLETE_ACTION, "disabled");
+      }
+   }
 
    @Override
    public void run() {
@@ -36,28 +78,6 @@ public class IdleChecker extends TimerTask {
          List<Client> applicableClients = getApplicableClients(e);
          moveIdleUsersFromList(applicableClients);
       });
-   }
-
-   /**
-    * Begins execution of the Idle Checker loop.
-    */
-   public static void start() {
-      idleChecker = new IdleChecker();
-      idleCheckerTimer = new Timer();
-      idleCheckerTimer.schedule(idleChecker, 0, 1000);
-      new MessageHandler(String.format(Messages.IDLE_CHECK_ENABLED, idleChecker.api
-          .getChannelInfo(idleChecker.config.getDestinationChannel()).getUninterruptibly()
-          .getName(), idleChecker.config.getMaxTimeMinutes())).sendToConsoleWith(LogPrefix.IDLE);
-   }
-
-   /**
-    * Stops execution of the Idle Checker loop.
-    */
-   public static void stop() {
-      idleChecker.cancel();
-      idleCheckerTimer.cancel();
-      idleCheckerTimer.purge();
-      new MessageHandler(Messages.IDLE_CHECK_DISABLED).sendToConsoleWith(LogPrefix.IDLE);
    }
 
    /**

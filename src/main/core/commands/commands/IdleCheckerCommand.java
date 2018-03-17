@@ -1,6 +1,7 @@
 package main.core.commands.commands;
 
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
+import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.conf.ConfigHandler;
 import main.core.Executor;
@@ -31,7 +32,7 @@ public class IdleCheckerCommand {
       this.api = instance.getApiAsync();
 
       try {
-         handle(input);
+         handle(input, null);
       } catch (Exception e) {
          new MessageHandler(e.getMessage()).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
       }
@@ -55,7 +56,7 @@ public class IdleCheckerCommand {
 
       try {
          accessManager.checkAccess(invokerAccessLevel);
-         handle(event.getMessage());
+         handle(event.getMessage(), event);
       } catch (AuthorizationException e) {
          throw new AuthorizationException(invokerAccessLevel, "!idlechecker");
       } catch (Exception e) {
@@ -63,8 +64,9 @@ public class IdleCheckerCommand {
       }
    }
 
-   private void handle(String input) throws Exception {
+   private void handle(String input, TextMessageEvent event) throws Exception {
       String[] params = input.split("\\s", 2);
+      MessageHandler messageHandler;
 
       if (params.length != 2) {
          throw new ArgumentMissingException("idlechecker", "action");
@@ -72,14 +74,26 @@ public class IdleCheckerCommand {
 
       switch (params[1]) {
          case "enable":
-            IdleChecker.start();
-            return;
+            messageHandler = new MessageHandler(IdleChecker.start());
+            break;
          case "disable":
-            IdleChecker.stop();
-            return;
+            messageHandler = new MessageHandler(IdleChecker.stop());
+            break;
          default:
             throw new Exception("Unrecognized action. Please refer to documentation. Accepted "
                 + "actions: 'enable', 'disable'");
+      }
+
+      messageHandler.sendToConsoleWith(LogPrefix.IDLE);
+
+      if (event != null) {
+         if (event.getTargetMode() == TextMessageTargetMode.SERVER) {
+            messageHandler.sendToServer();
+         } else if (event.getTargetMode() == TextMessageTargetMode.CHANNEL) {
+            messageHandler.sendToChannel();
+         } else if (event.getTargetMode() == TextMessageTargetMode.CLIENT) {
+            messageHandler.returnToSender(event);
+         }
       }
    }
 }
