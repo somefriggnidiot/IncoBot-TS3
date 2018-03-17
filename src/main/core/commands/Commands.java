@@ -7,6 +7,7 @@ import main.core.Executor;
 import main.core.commands.commands.IdleCheckerCommand;
 import main.core.commands.commands.KickCommand;
 import main.core.commands.commands.PingCommand;
+import main.core.commands.commands.UserInfoCommand;
 import main.util.Messages;
 import main.util.exception.AuthorizationException;
 import main.util.exception.CommandNotFoundException;
@@ -41,6 +42,9 @@ public class Commands {
          case "ping":
             new PingCommand();
             return;
+         case "userinfo":
+            new UserInfoCommand();
+            return;
          case "forcequit":
             Executor.getServer("testInstance").disconnect();
             return;
@@ -61,7 +65,7 @@ public class Commands {
     * being referenced.
     */
    public static void handle(TextMessageEvent event)
-       throws CommandNotFoundException, AuthorizationException {
+           throws CommandNotFoundException, AuthorizationException {
       validate(event.getMessage());
       String input = event.getMessage();
 
@@ -78,6 +82,9 @@ public class Commands {
          case "ping":
             new PingCommand(event);
             return;
+         case "userinfo":
+            new UserInfoCommand();
+            return;
          default:
             throw (new CommandNotFoundException(command[0]));
       }
@@ -93,6 +100,6 @@ public class Commands {
    private static void validate(final String input) {
       checkArgument(!StringUtils.isBlank(input), Messages.ERROR_INPUT_BLANK);
       checkArgument(input.startsWith(prefix),
-          String.format(Messages.ERROR_COMMAND_PREFIX_NOT_RECOGNIZED, input.substring(0, 1)));
+              String.format(Messages.ERROR_COMMAND_PREFIX_NOT_RECOGNIZED, input.substring(0, 1)));
    }
 }
