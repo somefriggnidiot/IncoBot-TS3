@@ -13,7 +13,8 @@ import main.util.MessageHandler;
 import main.util.enums.AccessLevel;
 import main.util.exception.AuthorizationException;
 
-/**
+
+**
  * Command used to do a check on user's information.
  */
 public class UserInfoCommand {
@@ -84,4 +85,3 @@ public class UserInfoCommand {
 
         }
     }
-}
