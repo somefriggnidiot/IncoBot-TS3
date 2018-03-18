@@ -69,14 +69,16 @@ public class IdleCheckerCommand {
       MessageHandler messageHandler;
 
       if (params.length != 2) {
-         throw new ArgumentMissingException("idlechecker", "action");
+         throw new ArgumentMissingException(params[0], "action");
       }
 
       switch (params[1]) {
          case "enable":
+         case "on":
             messageHandler = new MessageHandler(IdleChecker.start());
             break;
          case "disable":
+         case "off":
             messageHandler = new MessageHandler(IdleChecker.stop());
             break;
          default:
