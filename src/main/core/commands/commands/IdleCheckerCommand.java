@@ -68,25 +68,28 @@ public class IdleCheckerCommand {
       String[] params = input.split("\\s", 2);
       MessageHandler messageHandler;
 
-      if (params.length != 2) {
-         throw new ArgumentMissingException(params[0], "action");
+      if (params.length == 2) {
+         switch (params[1]) {
+            case "enable":
+            case "on":
+               messageHandler = new MessageHandler(IdleChecker.start());
+               break;
+            case "disable":
+            case "off":
+               messageHandler = new MessageHandler(IdleChecker.stop());
+               break;
+            case "status":
+               messageHandler = new MessageHandler(IdleChecker.getStatusReport());
+               break;
+            default:
+               throw new Exception("Unrecognized action. Please refer to documentation. Accepted "
+                   + "actions: 'enable', 'disable'");
+         }
+      } else if (params.length == 1) {
+         messageHandler = new MessageHandler(IdleChecker.getStatusReport());
+      } else {
+         throw new ArgumentMissingException("idlechecker", "action");
       }
-
-      switch (params[1]) {
-         case "enable":
-         case "on":
-            messageHandler = new MessageHandler(IdleChecker.start());
-            break;
-         case "disable":
-         case "off":
-            messageHandler = new MessageHandler(IdleChecker.stop());
-            break;
-         default:
-            throw new Exception("Unrecognized action. Please refer to documentation. Accepted "
-                + "actions: 'enable', 'disable'");
-      }
-
-      messageHandler.sendToConsoleWith(LogPrefix.IDLE);
 
       if (event != null) {
          if (event.getTargetMode() == TextMessageTargetMode.SERVER) {
@@ -96,6 +99,8 @@ public class IdleCheckerCommand {
          } else if (event.getTargetMode() == TextMessageTargetMode.CLIENT) {
             messageHandler.returnToSender(event);
          }
+      } else {
+         messageHandler.sendToConsoleWith(LogPrefix.IDLE);
       }
    }
 }
