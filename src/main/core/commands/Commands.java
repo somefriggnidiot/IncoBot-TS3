@@ -32,6 +32,8 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
+         case "idle":
+         case "idlecheck":
          case "idlechecker":
             new IdleCheckerCommand(input);
             return;

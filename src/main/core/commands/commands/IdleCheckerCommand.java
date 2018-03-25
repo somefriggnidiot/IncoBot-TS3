@@ -71,9 +71,11 @@ public class IdleCheckerCommand {
       if (params.length == 2) {
          switch (params[1]) {
             case "enable":
+            case "on":
                messageHandler = new MessageHandler(IdleChecker.start());
                break;
             case "disable":
+            case "off":
                messageHandler = new MessageHandler(IdleChecker.stop());
                break;
             case "status":
