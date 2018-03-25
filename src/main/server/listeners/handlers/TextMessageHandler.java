@@ -5,6 +5,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import java.util.logging.Level;
 import main.core.Executor;
 import main.core.commands.Commands;
+import main.core.functions.DadModeMessageChecker;
 import main.server.listeners.TextMessageListener;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
@@ -14,10 +15,18 @@ import main.util.MessageHandler;
  */
 public class TextMessageHandler {
 
+   private static Boolean dadModeIsActive = false;
    private final Integer botId = Executor.getServer("testInstance").getBotId();
    private TextMessageEvent event;
    private String message;
 
+   /**
+    * Handles/routes all appropriate execution paths for text messages.
+    *
+    * @param event the {@link TextMessageEvent) being handled.}
+    * @param consoleLogging whether or not console logging is enabled.
+    * @param fileLogging whether or not file logging is enabled.
+    */
    public TextMessageHandler(TextMessageEvent event, boolean consoleLogging, boolean fileLogging) {
       this.event = event;
       this.message = event.getMessage();
@@ -32,6 +41,11 @@ public class TextMessageHandler {
          }
       }
 
+      if (dadModeIsActive && (message.toLowerCase().startsWith("i'm") || message.toLowerCase()
+          .startsWith("im") || message.toLowerCase().startsWith("i am"))) {
+         DadModeMessageChecker.sendDadMessage(message, event.getTargetMode());
+      }
+
       if (consoleLogging) {
          logToConsole();
       }
@@ -40,6 +54,21 @@ public class TextMessageHandler {
       }
    }
 
+   /**
+    * @return whether or not dad mode is active.
+    */
+   public static Boolean getDadModeIsActive() {
+      return dadModeIsActive;
+   }
+
+   /**
+    * Sets whether or not dad mode is active.
+    *
+    * @param isActive whether or not dad mode is active.
+    */
+   public static void setDadModeIsActive(Boolean isActive) {
+      dadModeIsActive = isActive;
+   }
 
    private void logToFile() {
       // TODO Auto-generated method stub
