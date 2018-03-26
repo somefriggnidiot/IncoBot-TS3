@@ -9,6 +9,7 @@ public class Messages {
        + "config settings.";
    public final static String CLIENT_MOVED_FOR_INACTIVITY = "%s (%s) has been moved for being "
        + "idle for %s minutes.";
+   public final static String DAD_RESPONSE = "Hi %s, I'm dad!";
    public final static String ERROR_ACCESS_LIST_CANNOT_USE_COMMAND =
        "The '%s' access list does not "
            + "have permissions to use command '%s'";

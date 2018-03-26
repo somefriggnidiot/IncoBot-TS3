@@ -78,6 +78,12 @@ Dual-side support for forced disconnects of connected clients.
 **Use:** Kicks the client matching the clientId from the server with the provided reason.  
   
 ## Communication Abilities
+### Dad Mode
+Dual-side support for "Dad Mode" controls.  
+**Minimum Permission Level:** Moderator  
+**Syntax:**  `!dadmode <enable | disable>`  
+**Use:** Enables or disables DadMode functionality. When enabled, the bot will automatically respond to messages along the lines of "I'm {X}" with "Hi, {X}. I'm dad!"
+
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
 **Minimum Permission Level:** Default  

@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.core.Executor;
+import main.core.commands.commands.DadModeCommand;
 import main.core.commands.commands.IdleCheckerCommand;
 import main.core.commands.commands.KickCommand;
 import main.core.commands.commands.PingCommand;
@@ -32,6 +33,9 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
+         case "dadmode":
+            new DadModeCommand(input);
+            return;
          case "idle":
          case "idlecheck":
          case "idlechecker":
@@ -71,6 +75,9 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
+         case "dadmode":
+            new DadModeCommand(event);
+            return;
          case "idlechecker":
             new IdleCheckerCommand(event);
             return;
