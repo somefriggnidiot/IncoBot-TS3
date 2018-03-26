@@ -36,6 +36,8 @@ public class Commands {
          case "dadmode":
             new DadModeCommand(input);
             return;
+         case "idle":
+         case "idlecheck":
          case "idlechecker":
             new IdleCheckerCommand(input);
             return;

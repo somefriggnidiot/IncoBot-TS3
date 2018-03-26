@@ -28,14 +28,14 @@ public class IdleChecker extends TimerTask {
    private TS3ApiAsync api = Executor.getServer("testInstance").getApiAsync();
    private int maxIdleTimeMilliseconds = config.getMaxTimeMinutes() * 60000;
    private int botClientId = Executor.getServer("testInstance").getBotId();
+   private static String destinationChannelName;
+   private static Integer maxIdleTime;
 
    /**
     * Begins execution of the Idle Checker loop.
     */
    public static String start() {
       if (!isActive) {
-         String destinationChannelName;
-
          idleChecker = new IdleChecker();
          idleCheckerTimer = new Timer();
 
@@ -46,11 +46,11 @@ public class IdleChecker extends TimerTask {
             throw new NullPointerException(String
                 .format(Messages.CHANNEL_NOT_FOUND, idleChecker.config.getDestinationChannel()));
          }
+         maxIdleTime = idleChecker.config.getMaxTimeMinutes();
 
          idleCheckerTimer.schedule(idleChecker, 0, 1000);
          isActive = true;
-         return String.format(Messages.IDLE_CHECK_ENABLED, destinationChannelName, idleChecker
-             .config.getMaxTimeMinutes());
+         return String.format(Messages.IDLE_CHECK_ENABLED, destinationChannelName, maxIdleTime);
       } else {
          return String.format(Messages.IDLE_CHECK_CANNOT_COMPLETE_ACTION, "enabled");
       }
@@ -68,6 +68,15 @@ public class IdleChecker extends TimerTask {
          return Messages.IDLE_CHECK_DISABLED;
       } else {
          return String.format(Messages.IDLE_CHECK_CANNOT_COMPLETE_ACTION, "disabled");
+      }
+   }
+
+   public static String getStatusReport() {
+      if (isActive) {
+         return String.format("Idle Checker is currently active. Users will be moved to \"%s\" "
+             + "after %s minutes of inactivity.", destinationChannelName, maxIdleTime);
+      } else {
+         return "Idle Checker is currently inactive.";
       }
    }
 
