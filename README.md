@@ -68,8 +68,14 @@ For additional information, see [Idle Checker Configuration](#idle-checker-confi
 Dual-side support for forced disconnects of connected clients.  
 **Minimum Permission Level:** Moderator  
 **Syntax:** `!kick [clientId] [reason]`  
-**Use:** Kicks the client matching the clientId from the server with the provided reason.  
-  
+**Use:** Kicks the client matching the clientId from the server with the provided reason.
+
+### User Information
+Dual-side support for forced disconnect of connected clients.
+**Minimum Permission Level:** Moderator
+**Syntax:** `!userinfo (query)`
+**Use:** Retrieves information about users whose names the query partially matches. Special query `@me` retrieves information about the user who called the command. Failing to provide a query results in all online users being returned.
+    
 ## Communication Abilities
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
