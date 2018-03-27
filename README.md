@@ -68,7 +68,7 @@ For configuration information, see [Idle Checker Configuration](#idle-checker-co
 the designated idle channel after a certain threshold of time.  
 
 #### Check Module Status
-**Syntax:** `!idlechecker`, `!idlechecker status`
+**Syntax:** `!idlechecker`, `!idlechecker status`  
 **Use:** Displays whether or not Idle Checker is running. If it is running, this command also displays the threshold at which time users will be moved, and the name of the channel to which the idle user will be moved.
   
 ### Kick
