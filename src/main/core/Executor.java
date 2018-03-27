@@ -101,6 +101,9 @@ public class Executor implements Runnable {
             new MessageHandler(e.getMessage()).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
          } catch (Exception ex) {
             new MessageHandler(ex.getMessage()).sendToConsoleWith(Level.WARNING);
+            if (ex.getMessage().equals("Unhandled exception")) {
+               ex.printStackTrace();
+            }
          }
          if ("!forcequit".equals(msg)) {
             quit = true;

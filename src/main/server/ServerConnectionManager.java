@@ -36,6 +36,7 @@ public class ServerConnectionManager {
    private TS3Api api;
    private TS3ApiAsync apiAsync;
    private Integer botClientId;
+   private String botNickname;
    private HashMap<Integer, ClientInfo> connectedUserList = new HashMap<>();
 
    /**
@@ -55,6 +56,7 @@ public class ServerConnectionManager {
                     connectionConfig.getServerQueryPassword());
                 api.selectVirtualServerById(connectionConfig.getVirtualServerId());
                 api.setNickname(connectionConfig.getBotNickname());
+                botNickname = connectionConfig.getBotNickname();
                 api.registerAllEvents();
                 botClientId = api.whoAmI().getId();
 
@@ -159,6 +161,14 @@ public class ServerConnectionManager {
       return botClientId;
    }
 
+   /**
+    * @return the name being used on the server that this {@code ServerConnectionManager}'s
+    * connected to.
+    */
+   public String getBotNickname() {
+      return botNickname;
+   }
+
    public void addConnectedClient(int clientId, ClientInfo clientInfo) {
       if (!connectedUserList.containsKey(clientId) || clientId == -1) {
          connectedUserList.put(clientId, clientInfo);
@@ -173,7 +183,8 @@ public class ServerConnectionManager {
 
    public void printUserList() { //TODO Refactor to be viable, likely as part of clientinfo command.
       for (ClientInfo client : connectedUserList.values()) {
-         System.out.println(client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
+         System.out.println(
+             client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
       }
    }
 

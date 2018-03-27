@@ -1,17 +1,24 @@
 package main.core.commands.commands;
 
-import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
+import com.github.theholywaffle.teamspeak3.api.CommandFuture;
 import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import com.github.theholywaffle.teamspeak3.api.exception.TS3Exception;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
+import com.google.common.collect.Lists;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import javax.annotation.Nullable;
 import main.conf.ConfigHandler;
 import main.core.Executor;
 import main.core.commands.AccessManager;
-import main.server.ServerConnectionManager;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
+import main.util.Messages;
 import main.util.enums.AccessLevel;
 import main.util.exception.AuthorizationException;
 
@@ -21,13 +28,16 @@ import main.util.exception.AuthorizationException;
  */
 public class UserInfoCommand {
 
+   private TS3ApiAsync api;
    private TextMessageEvent event;
 
    /**
     * Create a UserCommand instance to handle console executions.
     */
-   public UserInfoCommand() {
-      this.handle();
+   public UserInfoCommand(String input) {
+      api = Executor.getServer("testInstance").getApiAsync();
+
+      this.handle(input, null);
    }
 
    /**
@@ -39,8 +49,7 @@ public class UserInfoCommand {
     */
    public UserInfoCommand(TextMessageEvent event) throws AuthorizationException {
       this.event = event;
-      ServerConnectionManager instance = Executor.getServer("testInstance");
-      TS3ApiAsync api = instance.getApiAsync();
+      api = Executor.getServer("testInstance").getApiAsync();
 
       AccessManager accessManager = new AccessManager(new ConfigHandler(),
           AccessLevel.DEFAULT);
@@ -49,45 +58,94 @@ public class UserInfoCommand {
 
       try {
          accessManager.checkAccess(invokerAccessLevel);
-         this.handle();
+         this.handle(event.getMessage(), event);
       } catch (AuthorizationException e) {
          throw new AuthorizationException(invokerAccessLevel, "!UserInfo");
       }
    }
 
-   private void handle() {
-      ServerConnectionManager instance = Executor.getServer("testInstance");
-      TS3Api api = instance.getApi();
-      List<Client> clients = api.getClients();
-      List<String> names;
-      List<String> uids;
-      List<Integer> clientIds;
-      String returnText = "| Name | UID | Client ID |\n";
+   private void handle(String input, TextMessageEvent event) {
+      List<Client> clients = new ArrayList<>();
+      String[] params = input.split("\\s", 2);
+
+      try {
+         if (params.length == 1) {
+            clients = api.getClients().get(2000, TimeUnit.MILLISECONDS);
+         } else {
+            if (params[1].equalsIgnoreCase("@me")) {
+               if (event == null) {
+                  clients = Lists.newArrayList(api.getClientByNameExact(Executor.getServer
+                      ("testInstance").getBotNickname(), false).get(2000, TimeUnit.MILLISECONDS));
+               } else {
+                  clients = Lists
+                      .newArrayList(api.getClientByNameExact(event.getInvokerName(), false)
+                          .get(2000, TimeUnit.MILLISECONDS));
+               }
+            } else {
+               try {
+                  CommandFuture<List<Client>> clientCommand = api.getClientsByName(params[1]);
+                  clients = clientCommand.get(2000, TimeUnit.MILLISECONDS);
+               } catch (TS3Exception e) {
+                  MessageHandler handler = new MessageHandler(
+                      String.format("No online clients had names containing "
+                          + "\"%s\"", params[1]));
+                  if (event == null) {
+                     handler.sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
+                  } else {
+                     handler.returnToSender(event);
+                  }
+                  return;
+               }
+            }
+         }
+
+         printList(compileResponse(clients), event != null ? event.getTargetMode() : null);
+
+      } catch (InterruptedException | TimeoutException e) {
+         MessageHandler messager = new MessageHandler(String.format(Messages.ERROR_COMMAND_TIMEOUT,
+             "UserInfo")).sendToConsoleWith(Level.WARNING);
+         if (event != null) {
+            messager.returnToSender(event);
+         }
+      }
+   }
+
+   private void printList(String text, @Nullable TextMessageTargetMode mode) {
+      if (event == null || mode == null) {
+         new MessageHandler(text).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
+         return;
+      }
+
+      if (mode == TextMessageTargetMode.SERVER) {
+         new MessageHandler(text).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+             .sendToServer();
+
+      } else if (mode == TextMessageTargetMode.CHANNEL) {
+         new MessageHandler(text).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+             .sendToChannel();
+
+      } else if (mode == TextMessageTargetMode.CLIENT) {
+         new MessageHandler(text).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+             .returnToSender(event);
+
+      }
+   }
+
+   private String compileResponse(List<Client> clients) {
+      String returnText;
+
+      if (event == null) {
+         returnText = "\n| Name | UID | Client ID |\n";
+      } else {
+         returnText = ".\n[b][u]| Name | UID | Client ID |[/u][/b]\n";
+      }
 
       for (Client client : clients) {
          returnText += String
              .format("| %s | %s | %s |\n", client.getNickname(), client.getUniqueIdentifier(),
-                 client.getIp());
+                 client.getId());
       }
 
-      if (event == null) {
-         new MessageHandler(returnText).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
-         return;
-      }
-
-      TextMessageTargetMode mode = event.getTargetMode();
-      if (mode == TextMessageTargetMode.SERVER) {
-         new MessageHandler(returnText).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
-             .sendToServer();
-
-      } else if (mode == TextMessageTargetMode.CHANNEL) {
-         new MessageHandler(returnText).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
-             .sendToChannel();
-
-      } else if (mode == TextMessageTargetMode.CLIENT) {
-         new MessageHandler(returnText).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
-             .returnToSender(event);
-
-      }
+      return returnText;
    }
 }
