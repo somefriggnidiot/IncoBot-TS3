@@ -52,7 +52,7 @@ public class UserInfoCommand {
       api = Executor.getServer("testInstance").getApiAsync();
 
       AccessManager accessManager = new AccessManager(new ConfigHandler(),
-          AccessLevel.DEFAULT);
+          AccessLevel.MODERATOR);
       AccessLevel invokerAccessLevel = accessManager.getAccessLevel(api.getClientInfo(event
           .getInvokerId()).getUninterruptibly().getServerGroups());
 
