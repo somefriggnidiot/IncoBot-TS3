@@ -5,8 +5,11 @@ package main.util;
  */
 public class Messages {
 
+   public final static String CHANNEL_NOT_FOUND = "No channel found for id: %s. Please check "
+       + "config settings.";
    public final static String CLIENT_MOVED_FOR_INACTIVITY = "%s (%s) has been moved for being "
        + "idle for %s minutes.";
+   public final static String DAD_RESPONSE = "Hi %s, I'm dad!";
    public final static String ERROR_ACCESS_LIST_CANNOT_USE_COMMAND =
        "The '%s' access list does not "
            + "have permissions to use command '%s'";
@@ -31,6 +34,8 @@ public class Messages {
    public final static String ERROR_UNKNOWN_ERROR =
        "Somewhere, something broke. Contact someone who "
            + "knows what they're doing.";
+   public final static String IDLE_CHECK_CANNOT_COMPLETE_ACTION = "Action cannot be completed. "
+       + "Idle Check is already %s.";
    public final static String IDLE_CHECK_DISABLED = "Idle Check disabled. Idle users will no "
        + "longer be automatically moved.";
    public final static String IDLE_CHECK_ENABLED = "Idle Check enabled. Idle users will now be "

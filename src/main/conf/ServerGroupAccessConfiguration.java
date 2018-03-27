@@ -29,12 +29,16 @@ public class ServerGroupAccessConfiguration {
       return ownerGroups;
    }
 
+   @JsonProperty("owner-groups")
+   public void setOwnerGroups(List<Integer> ownerGroups) {
+      this.ownerGroups = ownerGroups;
+   }
+
    /**
     * Adds a group ID to the list of groups designated as owners.
     *
     * @param group the ID of the group being added.
     */
-   @JsonProperty("owner-groups")
    public void addToOwnerGroups(Integer group) {
       if (!ownerGroups.contains(group)) {
          ownerGroups.add(group);
@@ -46,7 +50,6 @@ public class ServerGroupAccessConfiguration {
     *
     * @param group the ID of the group being removed.
     */
-   @JsonProperty("owner-groups")
    public void removeFromOwnerGroups(Integer group) {
       if (ownerGroups.contains(group)) {
          ownerGroups.remove(group);
@@ -61,12 +64,16 @@ public class ServerGroupAccessConfiguration {
       return superAdminGroups;
    }
 
+   @JsonProperty("super-admin-groups")
+   public void setSuperAdminGroups(List<Integer> superAdminGroups) {
+      this.superAdminGroups = superAdminGroups;
+   }
+
    /**
     * Adds a group ID to the list of groups designated as super admins.
     *
     * @param group the ID of the group being added.
     */
-   @JsonProperty("super-admin-groups")
    public void addToSuperAdminGroups(Integer group) {
       if (!superAdminGroups.contains(group)) {
          superAdminGroups.add(group);
@@ -78,7 +85,6 @@ public class ServerGroupAccessConfiguration {
     *
     * @param group the ID of the group being removed.
     */
-   @JsonProperty("super-admin-groups")
    public void removeFromSuperAdminGroups(Integer group) {
       if (superAdminGroups.contains(group)) {
          superAdminGroups.remove(group);
@@ -93,12 +99,16 @@ public class ServerGroupAccessConfiguration {
       return adminGroups;
    }
 
+   @JsonProperty("admin-groups")
+   public void setAdminGroups(List<Integer> adminGroups) {
+      this.adminGroups = adminGroups;
+   }
+
    /**
     * Adds a group ID to the list of groups designated as admins.
     *
     * @param group the ID of the group being added.
     */
-   @JsonProperty("admin-groups")
    public void addToAdminGroups(Integer group) {
       if (!adminGroups.contains(group)) {
          adminGroups.add(group);
@@ -110,7 +120,6 @@ public class ServerGroupAccessConfiguration {
     *
     * @param group the ID of the group being removed.
     */
-   @JsonProperty("admin-groups")
    public void removeFromAdminGroups(Integer group) {
       if (adminGroups.contains(group)) {
          adminGroups.remove(group);
@@ -125,12 +134,16 @@ public class ServerGroupAccessConfiguration {
       return moderatorGroups;
    }
 
+   @JsonProperty("moderator-groups")
+   public void setModeratorGroups(List<Integer> moderatorGroups) {
+      this.moderatorGroups = moderatorGroups;
+   }
+
    /**
     * Adds a group ID to the list of groups designated as moderators.
     *
     * @param group the ID of the group being added.
     */
-   @JsonProperty("moderator-groups")
    public void addToModeratorGroups(Integer group) {
       if (!moderatorGroups.contains(group)) {
          moderatorGroups.add(group);
@@ -142,7 +155,6 @@ public class ServerGroupAccessConfiguration {
     *
     * @param group the ID of the group being removed.
     */
-   @JsonProperty("moderator-groups")
    public void removeFromModeratorGroups(Integer group) {
       if (moderatorGroups.contains(group)) {
          moderatorGroups.remove(group);
@@ -157,12 +169,16 @@ public class ServerGroupAccessConfiguration {
       return sponsorGroups;
    }
 
+   @JsonProperty("sponsor-groups")
+   public void setSponsorGroups(List<Integer> sponsorGroups) {
+      this.sponsorGroups = sponsorGroups;
+   }
+
    /**
     * Adds a group ID to the list of groups designated as sponsors.
     *
     * @param group the ID of the group being added.
     */
-   @JsonProperty("sponsor-groups")
    public void addToSponsorGroups(Integer group) {
       if (!sponsorGroups.contains(group)) {
          sponsorGroups.add(group);
@@ -174,7 +190,6 @@ public class ServerGroupAccessConfiguration {
     *
     * @param group the ID of the group being removed.
     */
-   @JsonProperty("sponsor-groups")
    public void removeFromSponsorGroups(Integer group) {
       if (sponsorGroups.contains(group)) {
          sponsorGroups.remove(group);
@@ -189,12 +204,16 @@ public class ServerGroupAccessConfiguration {
       return blacklistedGroups;
    }
 
+   @JsonProperty("blacklisted-groups")
+   public void setBlacklistedGroups(List<Integer> blacklistedGroups) {
+      this.blacklistedGroups = blacklistedGroups;
+   }
+
    /**
     * Adds a group ID to the list of groups designated as blacklisted.
     *
     * @param group the ID of the group being added.
     */
-   @JsonProperty("blacklisted-groups")
    public void addToBlacklistedGroups(Integer group) {
       if (!blacklistedGroups.contains(group)) {
          blacklistedGroups.add(group);
@@ -206,7 +225,6 @@ public class ServerGroupAccessConfiguration {
     *
     * @param group the ID of the group being removed.
     */
-   @JsonProperty("blacklisted-groups")
    public void removeFromBlacklistedGroups(Integer group) {
       if (blacklistedGroups.contains(group)) {
          blacklistedGroups.remove(group);

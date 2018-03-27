@@ -40,7 +40,7 @@ blacklisted-groups:
 ```
   
 ### Idle Checker Configuration
-Establish a set time in minutes before idle users are automatically moved to a designated channel. Users can be exempt from the check by being added to one of the groups listed as an ignore 
+Establish a set time in minutes before idle users are automatically moved to a designated channel. Users can be exempt from the check by being added to one of the groups listed as an ignore
 group in the IdleChecker.yaml file. IdleChecker must be restarted for config changes to take 
 effect if changes are made to the file while it is running.  
 For control information, see [Idle Checker](#idle-checker).
@@ -57,12 +57,19 @@ idle-ignore-groups:
 
 ## Active Administration
 ### Idle Checker
+**Minimum Permission Level:** Admin
 Dual-side support for controlling whether or not the bot will check for (and move) idle users.
-**Minimum Permission Level:** Admin  
+For configuration information, see [Idle Checker Configuration](#idle-checker-configuration).
+
+#### Commands
+##### Toggle Module
 **Syntax:** `!idlechecker <enable | disable>`  
 **Use:** Enables or disables the IdleChecker functionality. When enabled, users will be moved to 
 the designated idle channel after a certain threshold of time.  
-For additional information, see [Idle Checker Configuration](#idle-checker-configuration).  
+
+#### Check Module Status
+**Syntax:** `!idlechecker`, `!idlechecker status`
+**Use:** Displays whether or not Idle Checker is running. If it is running, this command also displays the threshold at which time users will be moved, and the name of the channel to which the idle user will be moved.
   
 ### Kick
 Dual-side support for forced disconnects of connected clients.  
@@ -77,6 +84,12 @@ Dual-side support for forced disconnect of connected clients.
 **Use:** Retrieves information about users whose names the query partially matches. Special query `@me` retrieves information about the user who called the command. Failing to provide a query results in all online users being returned.
     
 ## Communication Abilities
+### Dad Mode
+Dual-side support for "Dad Mode" controls.  
+**Minimum Permission Level:** Moderator  
+**Syntax:**  `!dadmode <enable | disable>`  
+**Use:** Enables or disables DadMode functionality. When enabled, the bot will automatically respond to messages along the lines of "I'm {X}" with "Hi, {X}. I'm dad!"
+
 ### Ping/Pong
 Dual-side support for simple bot health-check by having it return a simple phrase when pinged.  
 **Minimum Permission Level:** Default  

@@ -25,5 +25,5 @@ hs_err_pid*
 .project
 .settings/*
 target/
-/conbot.iml
 /.idea/
+/incobot-ts3.iml
