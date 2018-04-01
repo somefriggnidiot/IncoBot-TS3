@@ -75,9 +75,16 @@ public class ServerConnectionManager {
    public void connect() {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
-            new MessageHandler("Connection Initiated").sendToConsoleWith(Level.CONFIG);
+            new MessageHandler("Connection Initiated").sendToConsoleWith(Level.INFO);
             serverQuery = new TS3Query(config);
-            serverQuery.connect();
+            try {
+               serverQuery.connect();
+            } catch (Exception e) {
+               new MessageHandler(String.format("Error attempting to connect to \"%s\", please "
+                       + "ensure that the address provided is correct.",
+                   connectionConfig.getServerAddress())).sendToConsoleWith(Level.SEVERE);
+               System.exit(0);
+            }
 
             apiAsync = serverQuery.getAsyncApi();
             api = serverQuery.getApi();
@@ -93,8 +100,17 @@ public class ServerConnectionManager {
 //               new MessageHandler("I'm alive!").sendToUser(client.getId());
 //            }
 
-            new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
-                .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
+            try {
+               new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
+                   .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
+            } catch (NullPointerException e) {
+               new MessageHandler("An unknown error occurred when attempting to retrieve bot "
+                   + "information. Please ensure you have the correct login information in the "
+                   + "connection configuration.")
+                   .sendToConsoleWith
+                   (Level.SEVERE);
+               System.exit(0);
+            }
          }
       });
    }
