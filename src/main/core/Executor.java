@@ -99,6 +99,9 @@ public class Executor implements Runnable {
             Commands.handle(msg);
          } catch (IllegalArgumentException | CommandNotFoundException e) {
             new MessageHandler(e.getMessage()).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE);
+         } catch (RuntimeException rte) {
+            new MessageHandler(rte.getMessage()).sendToConsoleWith(Level.SEVERE);
+            break;
          } catch (Exception ex) {
             new MessageHandler(ex.getMessage()).sendToConsoleWith(Level.WARNING);
          }
