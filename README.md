@@ -68,15 +68,21 @@ For configuration information, see [Idle Checker Configuration](#idle-checker-co
 the designated idle channel after a certain threshold of time.  
 
 #### Check Module Status
-**Syntax:** `!idlechecker`, `!idlechecker status`
+**Syntax:** `!idlechecker`, `!idlechecker status`  
 **Use:** Displays whether or not Idle Checker is running. If it is running, this command also displays the threshold at which time users will be moved, and the name of the channel to which the idle user will be moved.
   
 ### Kick
 Dual-side support for forced disconnects of connected clients.  
 **Minimum Permission Level:** Moderator  
 **Syntax:** `!kick [clientId] [reason]`  
-**Use:** Kicks the client matching the clientId from the server with the provided reason.  
-  
+**Use:** Kicks the client matching the clientId from the server with the provided reason.
+
+### User Information
+Dual-side support for forced disconnect of connected clients.
+**Minimum Permission Level:** Moderator
+**Syntax:** `!userinfo (query)`
+**Use:** Retrieves information about users whose names the query partially matches. Special query `@me` retrieves information about the user who called the command. Failing to provide a query results in all online users being returned.
+    
 ## Communication Abilities
 ### Dad Mode
 Dual-side support for "Dad Mode" controls.  

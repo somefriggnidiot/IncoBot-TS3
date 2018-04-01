@@ -8,6 +8,7 @@ import main.core.commands.commands.DadModeCommand;
 import main.core.commands.commands.IdleCheckerCommand;
 import main.core.commands.commands.KickCommand;
 import main.core.commands.commands.PingCommand;
+import main.core.commands.commands.UserInfoCommand;
 import main.util.Messages;
 import main.util.exception.AuthorizationException;
 import main.util.exception.CommandNotFoundException;
@@ -46,6 +47,9 @@ public class Commands {
             return;
          case "ping":
             new PingCommand();
+            return;
+         case "userinfo":
+            new UserInfoCommand(input);
             return;
          case "forcequit":
             Executor.getServer("testInstance").disconnect();
@@ -86,6 +90,9 @@ public class Commands {
             return;
          case "ping":
             new PingCommand(event);
+            return;
+         case "userinfo":
+            new UserInfoCommand(event);
             return;
          default:
             throw (new CommandNotFoundException(command[0]));

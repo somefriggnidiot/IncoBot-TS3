@@ -21,6 +21,8 @@ public class Messages {
    public final static String ERROR_COMMAND_PREFIX_NOT_RECOGNIZED =
        "'%s' is not a recognized command"
            + " prefix!";
+   public final static String ERROR_COMMAND_TIMEOUT = "The server did not answer the %s "
+       + "request in time. Please try again.";
    public final static String ERROR_INPUT_BLANK =
        "Space may be the final frontier, but sending me spaces"
            + " does nothing!";
