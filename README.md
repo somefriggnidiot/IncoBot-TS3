@@ -57,7 +57,7 @@ idle-ignore-groups:
 
 ## Active Administration
 ### Idle Checker
-**Minimum Permission Level:** Admin
+**Minimum Permission Level:** Admin  
 Dual-side support for controlling whether or not the bot will check for (and move) idle users.
 For configuration information, see [Idle Checker Configuration](#idle-checker-configuration).
 
@@ -78,12 +78,18 @@ Dual-side support for forced disconnects of connected clients.
 **Use:** Kicks the client matching the clientId from the server with the provided reason.
 
 ### User Information
-Dual-side support for forced disconnect of connected clients.
-**Minimum Permission Level:** Moderator
-**Syntax:** `!userinfo (query)`
+Dual-side support for forced disconnect of connected clients.  
+**Minimum Permission Level:** Moderator  
+**Syntax:** `!userinfo (query)`  
 **Use:** Retrieves information about users whose names the query partially matches. Special query `@me` retrieves information about the user who called the command. Failing to provide a query results in all online users being returned.
     
 ## Communication Abilities
+### Come Here
+Server-side support for moving the bot to the caller's channel.  
+**Minimum Permission Level:** Default  
+**Syntax:** `!comehere`  
+**Use:** Moves the query bot to the channel of the user who issued the command. Upon success, the bot will announce itself within channel chat.
+
 ### Dad Mode
 Dual-side support for "Dad Mode" controls.  
 **Minimum Permission Level:** Moderator  

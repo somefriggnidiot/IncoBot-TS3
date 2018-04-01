@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.core.Executor;
+import main.core.commands.commands.ComeHereCommand;
 import main.core.commands.commands.DadModeCommand;
 import main.core.commands.commands.IdleCheckerCommand;
 import main.core.commands.commands.KickCommand;
@@ -79,6 +80,10 @@ public class Commands {
       final String action = command[0].substring(1);
 
       switch (action.toLowerCase()) {
+         case "come":
+         case "comehere":
+            new ComeHereCommand(event);
+            return;
          case "dadmode":
             new DadModeCommand(event);
             return;
