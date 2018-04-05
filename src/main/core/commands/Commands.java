@@ -87,6 +87,8 @@ public class Commands {
          case "dadmode":
             new DadModeCommand(event);
             return;
+         case "idle":
+         case "idlecheck":
          case "idlechecker":
             new IdleCheckerCommand(event);
             return;
