@@ -1,5 +1,9 @@
 # IncoBot TS3
-[![Build Status](https://travis-ci.org/somefriggnidiot/IncoBot-TS3.svg?branch=master)](https://travis-ci.org/somefriggnidiot/IncoBot-TS3)  
+[![Build Status](https://travis-ci.org/somefriggnidiot/IncoBot-TS3.svg?branch=master)](https://travis-ci.org/somefriggnidiot/IncoBot-TS3)
+[![Github Pre-Releases](https://img.shields.io/github/downloads-pre/atom/atom/latest/total.svg)](https://github.com/somefriggnidiot/IncoBot-TS3/releases)
+[![Documentation](https://img.shields.io/badge/documentation-v0.1.0-blue.svg)](https://somefriggnidiot.github.io/IncoBot-TS3-Docs/)
+
+  
 Interactive console application for TS3 server administration, featuring front-and-back-end operation of most aspects.
 
 # Current Features
