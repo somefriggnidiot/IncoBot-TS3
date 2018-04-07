@@ -5,6 +5,7 @@
 ![GitHub commits](https://img.shields.io/github/commits-since/somefriggnidiot/IncoBot-TS3/0.1.0.svg)
 ![GitHub commit activity the past week, 4 weeks, year](https://img.shields.io/github/commit-activity/y/somefriggnidiot/IncoBot-TS3.svg)
 [![Github Pre-Releases](https://img.shields.io/github/downloads-pre/somefriggnidiot/IncoBot-TS3/latest/total.svg)](https://github.com/somefriggnidiot/IncoBot-TS3/releases)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/IncoBot-TS3/Lobby)
 
   
 Interactive console application for TS3 server administration, featuring front-and-back-end operation of most aspects.
