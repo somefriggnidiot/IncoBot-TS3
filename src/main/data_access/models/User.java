@@ -1,10 +1,9 @@
 package main.data_access.models;
 
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
-import java.sql.Date;
+import com.github.theholywaffle.teamspeak3.api.wrapper.DatabaseClientInfo;
+import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -13,13 +12,10 @@ import javax.persistence.Id;
 @Entity
 public class User {
    //Persistent Fields
-   @Id @GeneratedValue(strategy = GenerationType.AUTO) private Integer id;
-   private Integer tsdbid;
+   @Id private Integer tsdbid;
    private String uid;
    private String name;
-   private Boolean isOnline;
    private Date createdAt;
-   private Date updatedAt;
    private Date lastSeen;
 
    /**
@@ -27,15 +23,15 @@ public class User {
     * @param tsDatabaseId the TeamSpeak database ID of the user,
     * retrieved by calling {@link Client#getDatabaseId()}
     */
-   User (Integer tsDatabaseId) {
+   public User (Integer tsDatabaseId) {
       this.tsdbid = tsDatabaseId;
    }
 
-   /**
-    * @return the unique identifier of this {@code User}.
-    */
-   public Integer getId() {
-      return id;
+   public User (DatabaseClientInfo dbClient) {
+      this.tsdbid = dbClient.getDatabaseId();
+      this.createdAt = dbClient.getCreatedDate();
+      this.lastSeen = dbClient.getLastConnectedDate();
+      this.name = dbClient.getNickname();
    }
 
    /**
@@ -74,20 +70,6 @@ public class User {
    }
 
    /**
-    * @return whether or not this {@code User} is online.
-    */
-   public Boolean getOnlineStatus() {
-      return isOnline;
-   }
-
-   /**
-    * @param online whether or not this {@code User} is online.
-    */
-   public void setOnline(Boolean online) {
-      isOnline = online;
-   }
-
-   /**
     * @return the date this {@code User} was first seen on this server.
     */
    public Date getCreatedAt() {
@@ -99,20 +81,6 @@ public class User {
     */
    public void setCreatedAt(Date createdAt) {
       this.createdAt = createdAt;
-   }
-
-   /**
-    * @return the date of the most recent update to this {@code User}.
-    */
-   public Date getUpdatedAt() {
-      return updatedAt;
-   }
-
-   /**
-    * @param updatedAt the date of the most recent update to this {@code User}.
-    */
-   public void setUpdatedAt(Date updatedAt) {
-      this.updatedAt = updatedAt;
    }
 
    /**

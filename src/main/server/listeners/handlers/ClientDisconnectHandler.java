@@ -1,9 +1,14 @@
 package main.server.listeners.handlers;
 
+import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.ClientLeaveEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import java.util.logging.Level;
+import javax.persistence.EntityManager;
 import main.core.Executor;
+import main.data_access.DatabaseConnector;
+import main.data_access.DatabaseConnector.Table;
+import main.data_access.models.User;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.Messages;
@@ -13,10 +18,12 @@ public class ClientDisconnectHandler {
 
    private ClientLeaveEvent event;
    private ClientInfo clientInfo;
+   private TS3Api api;
 
    public ClientDisconnectHandler(ClientLeaveEvent event, boolean consoleLogging, boolean
        fileLogging) {
       this.event = event;
+      this.api = Executor.getServer("testInstance").getApi();
       try {
          this.clientInfo = Executor.getServer("testInstance")
              .removeConnectedClient(event.getClientId());
@@ -29,6 +36,7 @@ public class ClientDisconnectHandler {
       }
 
       logToConsole();
+      updateDatabase();
    }
 
    private void logToFile() {
@@ -60,6 +68,32 @@ public class ClientDisconnectHandler {
       }
 
       new MessageHandler(message).sendToConsoleWith(LogPrefix.DISCONNECTION);
+   }
+
+   private void updateDatabase() {
+      //Create connection
+      DatabaseConnector connector = new DatabaseConnector();
+      EntityManager em = connector.getEntityManager(Table.USER);
+
+      //Check to see if user exists already
+      User user = em.find(User.class, clientInfo.getDatabaseId());
+
+      if (user != null) {
+         //Update User
+         em.getTransaction().begin();
+         user.setLastSeen(api.getHostInfo().getTimeStamp());
+         em.getTransaction().commit();
+      } else {
+         //Create User
+         user = new User(api.getDatabaseClientInfo(clientInfo.getDatabaseId()));
+         user.setLastSeen(api.getHostInfo().getTimeStamp());
+
+         em.getTransaction().begin();
+         em.persist(user);
+         em.getTransaction().commit();
+      }
+
+      connector.close();
    }
 
    private String getBanLengthFormatted(String banLength) {
