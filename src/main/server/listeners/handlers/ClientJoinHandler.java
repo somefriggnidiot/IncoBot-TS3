@@ -4,6 +4,7 @@ import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
+import com.github.theholywaffle.teamspeak3.api.wrapper.DatabaseClientInfo;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +13,15 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import main.core.Config;
 import main.core.Executor;
+import main.data_access.DatabaseConnector;
+import main.data_access.DatabaseConnector.Table;
+import main.data_access.models.User;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.Messages;
@@ -60,6 +68,7 @@ public class ClientJoinHandler {
       }
 
       checkMembership();
+      updateDatabase();
    }
 
    private void logToFile() {
@@ -90,6 +99,33 @@ public class ClientJoinHandler {
       } catch (IOException e) {
          e.printStackTrace();
       }
+   }
+
+   private void updateDatabase() {
+      //Create connection
+      DatabaseConnector connector = new DatabaseConnector();
+      EntityManager em = connector.getEntityManager(Table.USER);
+
+      //Check to see if user exists already
+      User user = em.find(User.class, event.getClientDatabaseId());
+
+      if (user != null) {
+         //Update User
+         em.getTransaction().begin();
+         user.setLastSeen(api.getHostInfo().getTimeStamp());
+         em.getTransaction().commit();
+      } else {
+         //Create User
+         user = new User(api.getDatabaseClientInfo(event.getClientDatabaseId()));
+         user.setUid(event.getUniqueClientIdentifier());
+         user.setLastSeen(api.getHostInfo().getTimeStamp());
+
+         em.getTransaction().begin();
+         em.persist(user);
+         em.getTransaction().commit();
+      }
+
+      connector.close();
    }
 
    /**
