@@ -20,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Commands {
 
-   private static String prefix = "!";
+   private static final String prefix = "!";
 
    /**
     * Route message contents from console to the appropriate command if applicable.

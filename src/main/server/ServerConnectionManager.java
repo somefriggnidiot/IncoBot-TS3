@@ -21,23 +21,22 @@ import main.server.listeners.ClientMovedListener;
 import main.server.listeners.TextMessageListener;
 import main.util.MessageHandler;
 import main.util.Messages;
-import main.util.exception.ClientNotFoundException;
 
 /**
  * {@code ServerConnectionManagers} controls basic server connection configuration and actions.
  */
 public class ServerConnectionManager {
 
-   private ConnectionConfiguration connectionConfig = ConfigHandler.readConnectionConfig(
+   private final ConnectionConfiguration connectionConfig = ConfigHandler.readConnectionConfig(
        new File("./config/ConnectionConfig.yaml"));
+   private final TS3Config config;
+   private final HashMap<Integer, ClientInfo> connectedUserList = new HashMap<>();
    private TS3Query serverQuery;
-   private TS3Config config;
    private Level serverDebugLevel;
    private TS3Api api;
    private TS3ApiAsync apiAsync;
    private Integer botClientId;
    private String botNickname;
-   private HashMap<Integer, ClientInfo> connectedUserList = new HashMap<>();
 
    /**
     * Creates a basic SCM with default parameters.
@@ -96,12 +95,6 @@ public class ServerConnectionManager {
             api.addTS3Listeners(new ClientDisconnectListener());
             api.addTS3Listeners(new ClientMovedListener());
 
-            //TODO: Remove; added for testing.
-//            new MessageHandler("Blah!").sendToServer();
-//            for (Client client : api.getClients()) {
-//               new MessageHandler("I'm alive!").sendToUser(client.getId());
-//            }
-
             try {
                new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
                    .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
@@ -110,7 +103,7 @@ public class ServerConnectionManager {
                    + "information. Please ensure you have the correct login information in the "
                    + "connection configuration.")
                    .sendToConsoleWith
-                   (Level.SEVERE);
+                       (Level.SEVERE);
                System.exit(0);
             }
          }
@@ -122,24 +115,6 @@ public class ServerConnectionManager {
     */
    public void disconnect() {
       serverQuery.exit();
-   }
-
-   /**
-    * Creates a {@link TS3Config} prepared to connect to the given host.
-    *
-    * @param host the host to which this SCM will attempt a connection.
-    * @param debugLevel the logging level to be used by the server.
-    * @param floodRate the {@code FloodRate} to be used by the query when connected to the server.
-    * @return a ready-to-connect {@code TS3Config}.
-    */
-   public TS3Config createServerConfig(String host, Level debugLevel, FloodRate floodRate) {
-      serverDebugLevel = debugLevel;
-
-      return new ServerConfigBuilder()
-          .withHost(host)
-          .withDebugLevel(debugLevel)
-          .withFloodRate(floodRate)
-          .build();
    }
 
    /**
@@ -191,7 +166,7 @@ public class ServerConnectionManager {
       }
    }
 
-   public ClientInfo removeConnectedClient(int clientId) throws ClientNotFoundException {
+   public ClientInfo removeConnectedClient(int clientId) {
       ClientInfo clientInfo = connectedUserList.remove(clientId);
 
       return clientInfo.getId() == -1 ? null : clientInfo;

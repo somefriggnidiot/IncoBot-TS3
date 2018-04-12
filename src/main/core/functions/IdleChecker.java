@@ -23,13 +23,13 @@ public class IdleChecker extends TimerTask {
    private static IdleChecker idleChecker;
    private static Timer idleCheckerTimer;
    private static Boolean isActive = false;
-   private IdleCheckConfiguration config = ConfigHandler.readIdleCheckConfig(
-       new File("./config/IdleChecker.yaml"));
-   private TS3ApiAsync api = Executor.getServer("testInstance").getApiAsync();
-   private int maxIdleTimeMilliseconds = config.getMaxTimeMinutes() * 60000;
-   private int botClientId = Executor.getServer("testInstance").getBotId();
    private static String destinationChannelName;
    private static Integer maxIdleTime;
+   private final IdleCheckConfiguration config = ConfigHandler.readIdleCheckConfig(
+       new File("./config/IdleChecker.yaml"));
+   private final TS3ApiAsync api = Executor.getServer("testInstance").getApiAsync();
+   private final int maxIdleTimeMilliseconds = config.getMaxTimeMinutes() * 60000;
+   private final int botClientId = Executor.getServer("testInstance").getBotId();
 
    /**
     * Begins execution of the Idle Checker loop.

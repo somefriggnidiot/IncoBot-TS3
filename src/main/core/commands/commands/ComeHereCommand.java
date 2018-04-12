@@ -19,15 +19,15 @@ import main.util.exception.AuthorizationException;
  */
 public class ComeHereCommand {
 
-   private TextMessageEvent event;
-   private TS3ApiAsync api;
+   private final TextMessageEvent event;
+   private final TS3ApiAsync api;
 
    /**
     * Create a ComeHereCommand instance to handle client executions.
     *
     * @param event the {@link TextMessageEvent} that triggered the ComeHereCommand
-    * @throws AuthorizationException is the invoker of this command does not have authorization
-    * to execute it.
+    * @throws AuthorizationException is the invoker of this command does not have authorization to
+    * execute it.
     */
    public ComeHereCommand(TextMessageEvent event) throws AuthorizationException {
       this.event = event;

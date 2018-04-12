@@ -22,13 +22,13 @@ public class DadModeMessageChecker {
          TextMessageHandler.setDadModeIsActive(true);
          if (TextMessageHandler.getDadModeIsActive()) {
             isActive = true;
-            return String.format("Dad mode on"); //Success
+            return "Dad mode on"; //Success
          } else {
             isActive = false;
-            return String.format("Dad mode failed to turn on"); //Failure
+            return "Dad mode failed to turn on"; //Failure
          }
       } else {
-         return String.format("Dad mode already on"); //already on
+         return "Dad mode already on"; //already on
       }
    }
 
@@ -42,13 +42,13 @@ public class DadModeMessageChecker {
          TextMessageHandler.setDadModeIsActive(false);
          if (!TextMessageHandler.getDadModeIsActive()) {
             isActive = false;
-            return String.format("Dad mode off"); //Success, off
+            return "Dad mode off"; //Success, off
          } else {
             isActive = true;
-            return String.format("Dad mode failed to turn off"); //Failure, on
+            return "Dad mode failed to turn off"; //Failure, on
          }
       } else {
-         return String.format("Dad mode already off"); //already off
+         return "Dad mode already off"; //already off
       }
    }
 

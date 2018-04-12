@@ -7,7 +7,6 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.exception.TS3Exception;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -28,7 +27,7 @@ import main.util.exception.AuthorizationException;
  */
 public class UserInfoCommand {
 
-   private TS3ApiAsync api;
+   private final TS3ApiAsync api;
    private TextMessageEvent event;
 
    /**
@@ -65,7 +64,7 @@ public class UserInfoCommand {
    }
 
    private void handle(String input, TextMessageEvent event) {
-      List<Client> clients = new ArrayList<>();
+      List<Client> clients;
       String[] params = input.split("\\s", 2);
 
       try {
@@ -132,20 +131,20 @@ public class UserInfoCommand {
    }
 
    private String compileResponse(List<Client> clients) {
-      String returnText;
+      StringBuilder returnText;
 
       if (event == null) {
-         returnText = "\n| Name | UID | Client ID |\n";
+         returnText = new StringBuilder("\n| Name | UID | Client ID |\n");
       } else {
-         returnText = ".\n[b][u]| Name | UID | Client ID |[/u][/b]\n";
+         returnText = new StringBuilder(".\n[b][u]| Name | UID | Client ID |[/u][/b]\n");
       }
 
       for (Client client : clients) {
-         returnText += String
+         returnText.append(String
              .format("| %s | %s | %s |\n", client.getNickname(), client.getUniqueIdentifier(),
-                 client.getId());
+                 client.getId()));
       }
 
-      return returnText;
+      return returnText.toString();
    }
 }

@@ -11,8 +11,10 @@ import javax.persistence.Id;
  */
 @Entity
 public class User {
+
    //Persistent Fields
-   @Id private Integer tsdbid;
+   @Id
+   private final Integer tsdbid;
    private String uid;
    private String name;
    private Date createdAt;
@@ -20,14 +22,15 @@ public class User {
 
    /**
     * Creates a new {@link User} with the provided TeamSpeak database ID.
-    * @param tsDatabaseId the TeamSpeak database ID of the user,
-    * retrieved by calling {@link Client#getDatabaseId()}
+    *
+    * @param tsDatabaseId the TeamSpeak database ID of the user, retrieved by calling {@link
+    * Client#getDatabaseId()}
     */
-   public User (Integer tsDatabaseId) {
+   public User(Integer tsDatabaseId) {
       this.tsdbid = tsDatabaseId;
    }
 
-   public User (DatabaseClientInfo dbClient) {
+   public User(DatabaseClientInfo dbClient) {
       this.tsdbid = dbClient.getDatabaseId();
       this.createdAt = dbClient.getCreatedDate();
       this.lastSeen = dbClient.getLastConnectedDate();

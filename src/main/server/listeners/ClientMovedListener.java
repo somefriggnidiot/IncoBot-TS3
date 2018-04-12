@@ -9,6 +9,7 @@ import main.server.listeners.handlers.ClientMovedHandler;
  */
 public class ClientMovedListener extends TS3EventAdapter {
 
+   //TODO Read values from config.
    private boolean consoleLoggingOn = false;
    private boolean fileLoggingOn = false;
 

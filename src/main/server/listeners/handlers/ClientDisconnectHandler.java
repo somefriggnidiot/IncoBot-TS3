@@ -3,7 +3,6 @@ package main.server.listeners.handlers;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.ClientLeaveEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
-import java.util.logging.Level;
 import javax.persistence.EntityManager;
 import main.core.Executor;
 import main.data_access.DatabaseConnector;
@@ -12,24 +11,19 @@ import main.data_access.models.User;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
 import main.util.Messages;
-import main.util.exception.ClientNotFoundException;
 
 public class ClientDisconnectHandler {
 
-   private ClientLeaveEvent event;
-   private ClientInfo clientInfo;
-   private TS3Api api;
+   private final ClientLeaveEvent event;
+   private final ClientInfo clientInfo;
+   private final TS3Api api;
 
    public ClientDisconnectHandler(ClientLeaveEvent event, boolean consoleLogging, boolean
        fileLogging) {
       this.event = event;
       this.api = Executor.getServer("testInstance").getApi();
-      try {
-         this.clientInfo = Executor.getServer("testInstance")
-             .removeConnectedClient(event.getClientId());
-      } catch (ClientNotFoundException e) {
-         new MessageHandler(e.getMessage()).sendToConsoleWith(Level.WARNING);
-      }
+      this.clientInfo = Executor.getServer("testInstance")
+          .removeConnectedClient(event.getClientId());
 
       if (clientInfo == null || clientInfo.getId() == -1 || clientInfo.getNickname().isEmpty()) {
          return;
@@ -54,17 +48,23 @@ public class ClientDisconnectHandler {
       String invokerUid = event.getInvokerUniqueId();
       String reason = event.getReasonMessage();
 
-      if (event.getReasonId() == 5) {
-         message = String
-             .format(Messages.USER_KICKED, victimName, victimUid, invokerName, invokerUid, reason);
-      } else if (event.getReasonId() == 3) {
-         message = String.format(Messages.USER_LOST_CONNECTION, victimName, victimUid);
-      } else if (event.getReasonId() == 6) {
-         message = String
-             .format(Messages.USER_BANNED, victimName, victimUid, invokerName, invokerUid,
-                 getBanLengthFormatted(event.get("bantime")), reason);
-      } else {
-         message = String.format(Messages.USER_DISCONNECTED, victimName, victimUid, reason);
+      switch (event.getReasonId()) {
+         case 5:
+            message = String
+                .format(Messages.USER_KICKED, victimName, victimUid, invokerName, invokerUid,
+                    reason);
+            break;
+         case 3:
+            message = String.format(Messages.USER_LOST_CONNECTION, victimName, victimUid);
+            break;
+         case 6:
+            message = String
+                .format(Messages.USER_BANNED, victimName, victimUid, invokerName, invokerUid,
+                    getBanLengthFormatted(event.get("bantime")), reason);
+            break;
+         default:
+            message = String.format(Messages.USER_DISCONNECTED, victimName, victimUid, reason);
+            break;
       }
 
       new MessageHandler(message).sendToConsoleWith(LogPrefix.DISCONNECTION);
