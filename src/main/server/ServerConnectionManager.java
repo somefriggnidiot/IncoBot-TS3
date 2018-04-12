@@ -32,7 +32,7 @@ public class ServerConnectionManager {
    private final TS3Config config;
    private final HashMap<Integer, ClientInfo> connectedUserList = new HashMap<>();
    private TS3Query serverQuery;
-   private Level serverDebugLevel;
+   private final Level serverDebugLevel;
    private TS3Api api;
    private TS3ApiAsync apiAsync;
    private Integer botClientId;
@@ -74,38 +74,36 @@ public class ServerConnectionManager {
     * Initiates the connection to the server.
     */
    public void connect() {
-      javax.swing.SwingUtilities.invokeLater(new Runnable() {
-         public void run() {
-            new MessageHandler("Connection Initiated").sendToConsoleWith(Level.INFO);
-            serverQuery = new TS3Query(config);
-            try {
-               serverQuery.connect();
-            } catch (Exception e) {
-               new MessageHandler(String.format("Error attempting to connect to \"%s\", please "
-                       + "ensure that the address provided is correct.",
-                   connectionConfig.getServerAddress())).sendToConsoleWith(Level.SEVERE);
-               System.exit(0);
-            }
+      javax.swing.SwingUtilities.invokeLater(() -> {
+         new MessageHandler("Connection Initiated").sendToConsoleWith(Level.INFO);
+         serverQuery = new TS3Query(config);
+         try {
+            serverQuery.connect();
+         } catch (Exception e) {
+            new MessageHandler(String.format("Error attempting to connect to \"%s\", please "
+                    + "ensure that the address provided is correct.",
+                connectionConfig.getServerAddress())).sendToConsoleWith(Level.SEVERE);
+            System.exit(0);
+         }
 
-            apiAsync = serverQuery.getAsyncApi();
-            api = serverQuery.getApi();
+         apiAsync = serverQuery.getAsyncApi();
+         api = serverQuery.getApi();
 
-            api.addTS3Listeners(new TextMessageListener());
-            api.addTS3Listeners(new ClientConnectListener());
-            api.addTS3Listeners(new ClientDisconnectListener());
-            api.addTS3Listeners(new ClientMovedListener());
+         api.addTS3Listeners(new TextMessageListener());
+         api.addTS3Listeners(new ClientConnectListener());
+         api.addTS3Listeners(new ClientDisconnectListener());
+         api.addTS3Listeners(new ClientMovedListener());
 
-            try {
-               new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
-                   .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
-            } catch (NullPointerException e) {
-               new MessageHandler("An unknown error occurred when attempting to retrieve bot "
-                   + "information. Please ensure you have the correct login information in the "
-                   + "connection configuration.")
-                   .sendToConsoleWith
-                       (Level.SEVERE);
-               System.exit(0);
-            }
+         try {
+            new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
+                .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
+         } catch (NullPointerException e) {
+            new MessageHandler("An unknown error occurred when attempting to retrieve bot "
+                + "information. Please ensure you have the correct login information in the "
+                + "connection configuration.")
+                .sendToConsoleWith
+                    (Level.SEVERE);
+            System.exit(0);
          }
       });
    }
