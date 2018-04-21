@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import main.util.MessageHandler;
 
 /**
  * Utility class for managing reading from and writing to configuration files.
@@ -23,7 +25,8 @@ public class ConfigHandler {
       try {
          return mapper.readValue(file, ConnectionConfiguration.class);
       } catch (IOException e) {
-         e.printStackTrace();
+         new MessageHandler("Could not read file: \"/config/ConnectionConfig.yaml\"")
+             .sendToConsoleWith(Level.SEVERE);
          return null;
       }
    }
@@ -41,7 +44,8 @@ public class ConfigHandler {
       try {
          return mapper.readValue(file, IdleCheckConfiguration.class);
       } catch (IOException e) {
-         e.printStackTrace();
+         new MessageHandler("Could not read file: \"/config/IdleChecker.yaml\"")
+             .sendToConsoleWith(Level.SEVERE);
          return null;
       }
    }
@@ -59,7 +63,8 @@ public class ConfigHandler {
       try {
          return mapper.readValue(file, ServerGroupAccessConfiguration.class);
       } catch (IOException e) {
-         e.printStackTrace();
+         new MessageHandler("Could not read file: \"/config/ServerGroupAccess.yaml\"")
+             .sendToConsoleWith(Level.SEVERE);
          return null;
       }
    }

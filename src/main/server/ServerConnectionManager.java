@@ -171,10 +171,11 @@ public class ServerConnectionManager {
    }
 
    public void printUserList() { //TODO Refactor to be viable, likely as part of clientinfo command.
+      StringBuilder builder = new StringBuilder("Online Users: \n");
       for (ClientInfo client : connectedUserList.values()) {
-         System.out.println(
-             client.getId() + " : " + client.getNickname() + " : " + client.getUniqueIdentifier());
+         builder.append(client.toString() + "\n");
       }
+      new MessageHandler(builder.toString()).sendToConsoleWith(Level.INFO);
    }
 
    private void compileOnlineUserList(TS3Api api) {
