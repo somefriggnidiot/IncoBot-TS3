@@ -1,7 +1,6 @@
 package main.core.commands.commands;
 
 import com.github.theholywaffle.teamspeak3.TS3ApiAsync;
-import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.conf.ConfigHandler;
 import main.core.Executor;
@@ -19,8 +18,8 @@ import main.util.exception.AuthorizationException;
  */
 public class IdleCheckerCommand {
 
-   private ServerConnectionManager instance;
-   private TS3ApiAsync api;
+   private final ServerConnectionManager instance;
+   private final TS3ApiAsync api;
 
    /**
     * Create an IdleCheckerCommand to handle console execution.
@@ -68,36 +67,44 @@ public class IdleCheckerCommand {
       String[] params = input.split("\\s", 2);
       MessageHandler messageHandler;
 
-      if (params.length == 2) {
-         switch (params[1]) {
-            case "enable":
-            case "on":
-               messageHandler = new MessageHandler(IdleChecker.start());
-               break;
-            case "disable":
-            case "off":
-               messageHandler = new MessageHandler(IdleChecker.stop());
-               break;
-            case "status":
-               messageHandler = new MessageHandler(IdleChecker.getStatusReport());
-               break;
-            default:
-               throw new Exception("Unrecognized action. Please refer to documentation. Accepted "
-                   + "actions: 'enable', 'disable'");
-         }
-      } else if (params.length == 1) {
-         messageHandler = new MessageHandler(IdleChecker.getStatusReport());
-      } else {
-         throw new ArgumentMissingException("idlechecker", "action");
+      switch (params.length) {
+         case 2:
+            switch (params[1]) {
+               case "enable":
+               case "on":
+                  messageHandler = new MessageHandler(IdleChecker.start());
+                  break;
+               case "disable":
+               case "off":
+                  messageHandler = new MessageHandler(IdleChecker.stop());
+                  break;
+               case "status":
+                  messageHandler = new MessageHandler(IdleChecker.getStatusReport());
+                  break;
+               default:
+                  throw new Exception(
+                      "Unrecognized action. Please refer to documentation. Accepted "
+                          + "actions: 'enable', 'disable'");
+            }
+            break;
+         case 1:
+            messageHandler = new MessageHandler(IdleChecker.getStatusReport());
+            break;
+         default:
+            throw new ArgumentMissingException("idlechecker", "action");
       }
 
       if (event != null) {
-         if (event.getTargetMode() == TextMessageTargetMode.SERVER) {
-            messageHandler.sendToServer();
-         } else if (event.getTargetMode() == TextMessageTargetMode.CHANNEL) {
-            messageHandler.sendToChannel();
-         } else if (event.getTargetMode() == TextMessageTargetMode.CLIENT) {
-            messageHandler.returnToSender(event);
+         switch (event.getTargetMode()) {
+            case SERVER:
+               messageHandler.sendToServer();
+               break;
+            case CHANNEL:
+               messageHandler.sendToChannel();
+               break;
+            case CLIENT:
+               messageHandler.returnToSender(event);
+               break;
          }
       } else {
          messageHandler.sendToConsoleWith(LogPrefix.IDLE);

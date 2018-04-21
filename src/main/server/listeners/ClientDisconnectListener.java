@@ -6,6 +6,7 @@ import main.server.listeners.handlers.ClientDisconnectHandler;
 
 public class ClientDisconnectListener extends TS3EventAdapter {
 
+   //TODO Read from config.
    private boolean consoleLoggingOn = false;
    private boolean fileLoggingOn = false;
 

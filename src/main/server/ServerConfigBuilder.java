@@ -11,7 +11,7 @@ import java.util.logging.Level;
  */
 public class ServerConfigBuilder {
 
-   private TS3Config config;
+   private final TS3Config config;
    private String host;
    private Level debugLevel;
    private FloodRate floodRate;

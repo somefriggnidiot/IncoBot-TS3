@@ -21,23 +21,22 @@ import main.server.listeners.ClientMovedListener;
 import main.server.listeners.TextMessageListener;
 import main.util.MessageHandler;
 import main.util.Messages;
-import main.util.exception.ClientNotFoundException;
 
 /**
  * {@code ServerConnectionManagers} controls basic server connection configuration and actions.
  */
 public class ServerConnectionManager {
 
-   private ConnectionConfiguration connectionConfig = ConfigHandler.readConnectionConfig(
+   private final ConnectionConfiguration connectionConfig = ConfigHandler.readConnectionConfig(
        new File("./config/ConnectionConfig.yaml"));
+   private final TS3Config config;
+   private final HashMap<Integer, ClientInfo> connectedUserList = new HashMap<>();
    private TS3Query serverQuery;
-   private TS3Config config;
-   private Level serverDebugLevel;
+   private final Level serverDebugLevel;
    private TS3Api api;
    private TS3ApiAsync apiAsync;
    private Integer botClientId;
    private String botNickname;
-   private HashMap<Integer, ClientInfo> connectedUserList = new HashMap<>();
 
    /**
     * Creates a basic SCM with default parameters.
@@ -75,44 +74,36 @@ public class ServerConnectionManager {
     * Initiates the connection to the server.
     */
    public void connect() {
-      javax.swing.SwingUtilities.invokeLater(new Runnable() {
-         public void run() {
-            new MessageHandler("Connection Initiated").sendToConsoleWith(Level.INFO);
-            serverQuery = new TS3Query(config);
-            try {
-               serverQuery.connect();
-            } catch (Exception e) {
-               new MessageHandler(String.format("Error attempting to connect to \"%s\", please "
-                       + "ensure that the address provided is correct.",
-                   connectionConfig.getServerAddress())).sendToConsoleWith(Level.SEVERE);
-               System.exit(0);
-            }
+      javax.swing.SwingUtilities.invokeLater(() -> {
+         new MessageHandler("Connection Initiated").sendToConsoleWith(Level.INFO);
+         serverQuery = new TS3Query(config);
+         try {
+            serverQuery.connect();
+         } catch (Exception e) {
+            new MessageHandler(String.format("Error attempting to connect to \"%s\", please "
+                    + "ensure that the address provided is correct.",
+                connectionConfig.getServerAddress())).sendToConsoleWith(Level.SEVERE);
+            System.exit(0);
+         }
 
-            apiAsync = serverQuery.getAsyncApi();
-            api = serverQuery.getApi();
+         apiAsync = serverQuery.getAsyncApi();
+         api = serverQuery.getApi();
 
-            api.addTS3Listeners(new TextMessageListener());
-            api.addTS3Listeners(new ClientConnectListener());
-            api.addTS3Listeners(new ClientDisconnectListener());
-            api.addTS3Listeners(new ClientMovedListener());
+         api.addTS3Listeners(new TextMessageListener());
+         api.addTS3Listeners(new ClientConnectListener());
+         api.addTS3Listeners(new ClientDisconnectListener());
+         api.addTS3Listeners(new ClientMovedListener());
 
-            //TODO: Remove; added for testing.
-//            new MessageHandler("Blah!").sendToServer();
-//            for (Client client : api.getClients()) {
-//               new MessageHandler("I'm alive!").sendToUser(client.getId());
-//            }
-
-            try {
-               new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
-                   .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
-            } catch (NullPointerException e) {
-               new MessageHandler("An unknown error occurred when attempting to retrieve bot "
-                   + "information. Please ensure you have the correct login information in the "
-                   + "connection configuration.")
-                   .sendToConsoleWith
-                   (Level.SEVERE);
-               System.exit(0);
-            }
+         try {
+            new MessageHandler(String.format(Messages.SUCCESSFULLY_CONNECTED, api.getServerInfo()
+                .getName(), api.whoAmI().getNickname())).sendToConsoleWith(Level.INFO);
+         } catch (NullPointerException e) {
+            new MessageHandler("An unknown error occurred when attempting to retrieve bot "
+                + "information. Please ensure you have the correct login information in the "
+                + "connection configuration.")
+                .sendToConsoleWith
+                    (Level.SEVERE);
+            System.exit(0);
          }
       });
    }
@@ -122,24 +113,6 @@ public class ServerConnectionManager {
     */
    public void disconnect() {
       serverQuery.exit();
-   }
-
-   /**
-    * Creates a {@link TS3Config} prepared to connect to the given host.
-    *
-    * @param host the host to which this SCM will attempt a connection.
-    * @param debugLevel the logging level to be used by the server.
-    * @param floodRate the {@code FloodRate} to be used by the query when connected to the server.
-    * @return a ready-to-connect {@code TS3Config}.
-    */
-   public TS3Config createServerConfig(String host, Level debugLevel, FloodRate floodRate) {
-      serverDebugLevel = debugLevel;
-
-      return new ServerConfigBuilder()
-          .withHost(host)
-          .withDebugLevel(debugLevel)
-          .withFloodRate(floodRate)
-          .build();
    }
 
    /**
@@ -191,7 +164,7 @@ public class ServerConnectionManager {
       }
    }
 
-   public ClientInfo removeConnectedClient(int clientId) throws ClientNotFoundException {
+   public ClientInfo removeConnectedClient(int clientId) {
       ClientInfo clientInfo = connectedUserList.remove(clientId);
 
       return clientInfo.getId() == -1 ? null : clientInfo;

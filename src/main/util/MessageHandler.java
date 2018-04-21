@@ -12,7 +12,7 @@ import main.core.Executor;
 public class MessageHandler {
 
    private static Level configDebugLevel = Configuration.getLoggingLevel();
-   private String message;
+   private final String message;
 
    public MessageHandler(String message) {
       this.message = message;
@@ -24,6 +24,7 @@ public class MessageHandler {
    }
 
    public MessageHandler sendToConsoleWith(Level loggingLevel) {
+      //TODO Add check against configured debug level.
       System.out.println(String.format("[%s] [%s] %s", Util.timeStamp(), loggingLevel.getName(),
           message));
       return this;

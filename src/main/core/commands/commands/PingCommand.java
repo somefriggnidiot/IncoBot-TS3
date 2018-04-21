@@ -60,15 +60,19 @@ public class PingCommand {
       }
 
       TextMessageTargetMode mode = event.getTargetMode();
-      if (mode == TextMessageTargetMode.SERVER) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
-             .sendToServer();
-      } else if (mode == TextMessageTargetMode.CHANNEL) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
-             .sendToChannel();
-      } else if (mode == TextMessageTargetMode.CLIENT) {
-         new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
-             .returnToSender(event);
+      switch (mode) {
+         case SERVER:
+            new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+                .sendToServer();
+            break;
+         case CHANNEL:
+            new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+                .sendToChannel();
+            break;
+         case CLIENT:
+            new MessageHandler(RETURN_TEXT).sendToConsoleWith(LogPrefix.COMMAND_RESPONSE)
+                .returnToSender(event);
+            break;
       }
    }
 }

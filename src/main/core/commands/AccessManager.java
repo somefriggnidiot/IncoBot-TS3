@@ -12,8 +12,8 @@ import main.util.exception.AuthorizationException;
  */
 public class AccessManager {
 
-   private ServerGroupAccessConfiguration groupAccessConfig;
-   private AccessLevel requiredLevel;
+   private final ServerGroupAccessConfiguration groupAccessConfig;
+   private final AccessLevel requiredLevel;
 
    /**
     * Creates a new {@link AccessManager} with a given minimum required {@link AccessLevel}.

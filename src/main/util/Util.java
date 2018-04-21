@@ -4,9 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
- * Utilities for SFITS3 bot. Contains functions and resources necessary to be
+ * Utilities for IncoBot-TS3 bot. Contains functions and resources helpful for efficient
+ * development.
  */
-public class Util {
+class Util {
 
    /**
     * Returns a log-ready time stamp of the format {@code "[yyyy-MM-dd HH:mm:ss] "}

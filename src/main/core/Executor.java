@@ -12,13 +12,13 @@ import main.util.MessageHandler;
 import main.util.exception.CommandNotFoundException;
 
 /**
- * Main class of the SFITS3 bot program.
+ * Main class of the IncoBot-TS3 program.
  */
 public class Executor implements Runnable {
 
    private final static Map<String, ServerConnectionManager> instances = new HashMap<>();
-   static BufferedReader in;
-   static Boolean quit = false;
+   private static BufferedReader in;
+   private static Boolean quit = false;
 
    /**
     * Begins bot services and logging. This function is run automatically upon execution and should

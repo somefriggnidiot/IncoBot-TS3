@@ -1,7 +1,6 @@
 package main.core.commands.commands;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
-import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import main.conf.ConfigHandler;
 import main.core.Executor;
@@ -15,8 +14,8 @@ import main.util.exception.AuthorizationException;
 
 public class DadModeCommand {
 
-   private ServerConnectionManager instance;
-   private TS3Api api;
+   private final ServerConnectionManager instance;
+   private final TS3Api api;
 
    /**
     * Creates a DadModeCommand instance to handle console execution.
@@ -83,12 +82,16 @@ public class DadModeCommand {
       messageHandler.sendToConsoleWith(LogPrefix.DAD_MODE);
 
       if (event != null) {
-         if (event.getTargetMode() == TextMessageTargetMode.SERVER) {
-            messageHandler.sendToServer();
-         } else if (event.getTargetMode() == TextMessageTargetMode.CHANNEL) {
-            messageHandler.sendToChannel();
-         } else if (event.getTargetMode() == TextMessageTargetMode.CLIENT) {
-            messageHandler.returnToSender(event);
+         switch (event.getTargetMode()) {
+            case SERVER:
+               messageHandler.sendToServer();
+               break;
+            case CHANNEL:
+               messageHandler.sendToChannel();
+               break;
+            case CLIENT:
+               messageHandler.returnToSender(event);
+               break;
          }
       }
    }

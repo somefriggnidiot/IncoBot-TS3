@@ -82,7 +82,7 @@ public class IdleCheckConfiguration {
    @JsonProperty("idle-ignore-groups")
    public void removeIgnoreGroup(Integer ignoreGroup) {
       if (this.ignoreGroups.contains(ignoreGroup)) {
-         ignoreGroups.remove(Integer.valueOf(ignoreGroup));
+         ignoreGroups.remove(ignoreGroup);
       }
    }
 

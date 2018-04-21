@@ -17,8 +17,8 @@ public class TextMessageHandler {
 
    private static Boolean dadModeIsActive = false;
    private final Integer botId = Executor.getServer("testInstance").getBotId();
-   private TextMessageEvent event;
-   private String message;
+   private final TextMessageEvent event;
+   private final String message;
 
    /**
     * Handles/routes all appropriate execution paths for text messages.

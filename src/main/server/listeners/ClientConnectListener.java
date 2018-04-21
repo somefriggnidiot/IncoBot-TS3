@@ -9,6 +9,7 @@ import main.server.listeners.handlers.ClientJoinHandler;
  */
 public class ClientConnectListener extends TS3EventAdapter {
 
+   //TODO Read from config.
    private boolean consoleLoggingOn = false;
    private boolean fileLoggingOn = false;
 

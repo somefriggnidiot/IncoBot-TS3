@@ -7,9 +7,9 @@ import main.conf.ConfigHandler;
 import main.core.Executor;
 import main.core.commands.AccessManager;
 import main.server.ServerConnectionManager;
-import main.util.Messages;
 import main.util.LogPrefix;
 import main.util.MessageHandler;
+import main.util.Messages;
 import main.util.enums.AccessLevel;
 import main.util.exception.ArgumentMissingException;
 import main.util.exception.AuthorizationException;
@@ -21,9 +21,9 @@ import main.util.exception.InvalidUserIdException;
  */
 public class KickCommand {
 
+   private final ServerConnectionManager instance;
+   private final TS3ApiAsync api;
    private TextMessageEvent event;
-   private ServerConnectionManager instance;
-   private TS3ApiAsync api;
 
    /**
     * Create a KickCommand instance to handle console execution.

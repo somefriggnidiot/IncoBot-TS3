@@ -9,7 +9,7 @@ public enum AccessLevel {
    DEFAULT(20),
    BLACKLISTED(0);
 
-   private int value;
+   private final int value;
 
    AccessLevel(int value) {
       this.value = value;

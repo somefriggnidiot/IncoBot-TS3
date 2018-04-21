@@ -14,12 +14,11 @@ import main.util.Messages;
 public class ClientMovedHandler {
 
    private final TS3Api api = Executor.getServer("testInstance").getApi();
-   private ClientMovedEvent event;
-   private String movedName;
-   private String movedUid;
-   private String invokerName;
-   private String invokerUid;
-   private String channelName;
+   private final String movedName;
+   private final String movedUid;
+   private final String invokerName;
+   private final String invokerUid;
+   private final String channelName;
 
    /**
     * Creates a new {@link ClientMovedHandler} with the provided {@link ClientMovedEvent} and
@@ -33,7 +32,6 @@ public class ClientMovedHandler {
       ClientInfo movedClient;
       movedClient = api.getClientInfo(event.getClientId());
 
-      this.event = event;
       this.movedName = movedClient.getNickname();
       this.movedUid = movedClient.getUniqueIdentifier();
       this.invokerName = event.getInvokerName();

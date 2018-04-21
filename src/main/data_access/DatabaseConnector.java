@@ -8,7 +8,8 @@ import javax.persistence.Persistence;
  * Handles connections to the embedded database.
  */
 public class DatabaseConnector {
-   private static String USER_TABLE = "./db/users.odb";
+
+   private static final String USER_TABLE = "./db/users.odb";
    private EntityManagerFactory managerFactory;
    private EntityManager manager;
 
